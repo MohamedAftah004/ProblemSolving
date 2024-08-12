@@ -1,0 +1,313 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red202\green202\blue202;\red23\green23\blue23;\red191\green109\blue186;
+\red192\green125\blue86;\red58\green143\blue232;\red65\green192\blue160;\red224\green226\blue154;\red132\green210\blue252;
+\red166\green196\blue152;\red88\green137\blue68;\red205\green173\blue106;}
+{\*\expandedcolortbl;;\csgenericrgb\c79216\c79216\c79216;\csgenericrgb\c9020\c9020\c9020;\csgenericrgb\c74902\c42745\c72941;
+\csgenericrgb\c75294\c49020\c33725;\csgenericrgb\c22745\c56078\c90980;\csgenericrgb\c25490\c75294\c62745;\csgenericrgb\c87843\c88627\c60392;\csgenericrgb\c51765\c82353\c98824;
+\csgenericrgb\c65098\c76863\c59608;\csgenericrgb\c34510\c53725\c26667;\csgenericrgb\c80392\c67843\c41569;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 \
+
+\f1 \cf4 #include \cf5 <iostream>\
+\cf4 using \cf6 namespace \cf7 std\cf2 ;\
+\
+\
+\cf6 struct \cf7 stDate \cf2 \{\
+\
+	\cf6 short Year\cf2 ;\
+	\cf6 short Month\cf2 ;\
+	\cf6 short Day\cf2 ;\
+\
+\};\
+\
+\cf6 short \cf8 ReadYear\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Year \cf2 = \cf10 0\cf2 ;\
+	\cf9 cout \cf8 << \cf5 "Enter a Year To Check : "\cf2 ;\
+	\cf9 cin \cf8 >> \cf9 Year\cf2 ;\
+	\cf4 return \cf9 Year\cf2 ;\
+\
+\}\
+\cf6 short \cf8 ReadMonth\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Month \cf2 = \cf10 0\cf2 ;\
+\
+	\cf4 do \cf2 \{\
+		\cf9 cout \cf8 << \cf5 "Enter Month To Check : "\cf2 ;\
+		\cf9 cin \cf8 >> \cf9 Month\cf2 ;\
+	\} \cf4 while \cf2 (\cf9 Month \cf2 > \cf10 12 \cf2 || \cf9 Month \cf2 < \cf10 1\cf2 );\
+\
+	\cf4 return \cf9 Month\cf2 ;\
+\}\
+\cf6 short \cf8 ReadDay\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Day \cf2 = \cf10 0\cf2 ;\
+\
+	\cf4 do \cf2 \{\
+		\cf9 cout \cf8 << \cf5 "Enter Day To Check : "\cf2 ;\
+		\cf9 cin \cf8 >> \cf9 Day\cf2 ;\
+	\} \cf4 while \cf2 (\cf9 Day \cf2 > \cf10 31 \cf2 || \cf9 Day \cf2 < \cf10 1\cf2 );\
+\
+	\cf4 return \cf9 Day\cf2 ;\
+\}\
+\
+\cf7 stDate \cf8 ReadFullDate\cf2 ()\
+\{\
+    \cf7 stDate \cf9 Date \cf2 ;\
+    \cf9 Date\cf2 .\cf6 Day \cf2 = \cf8 ReadDay\cf2 () ;\
+    \cf9 Date\cf2 .\cf6 Month \cf2 = \cf8 ReadMonth\cf2 () ;\
+    \cf9 Date\cf2 .\cf6 Year \cf2 = \cf8 ReadYear\cf2 () ;\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf6 bool \cf8 IsLeapYear\cf2 (\cf6 short \cf9 Year\cf2 )\
+\{\
+\
+	\cf4 return \cf2 (\cf9 Year \cf2 % \cf10 400 \cf2 == \cf10 0\cf2 ) || (\cf9 Year \cf2 % \cf10 100 \cf2 != \cf10 0\cf2 ) && (\cf9 Year \cf2 % \cf10 4 \cf2 == \cf10 0\cf2 ) ? \cf6 true \cf2 : \cf6 false\cf2 ;\
+\
+\}\
+\cf6 short \cf8 NumberOfDaysInMonth\cf2 (\cf6 short \cf9 Month \cf2 , \cf6 short \cf9 Year\cf2 )\
+\{\
+\
+    \cf4 if\cf2 (\cf9 Month \cf2 > \cf10 12 \cf2 || \cf9 Month \cf2 <\cf10 1\cf2 )\
+    \cf4 return \cf10 0\cf2 ;\
+\
+	\cf6 short \cf9 Days\cf2 [\cf10 12\cf2 ] = \{ \cf10 31 \cf2 , \cf10 28 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 \};\
+\
+	\cf4 return \cf2 (\cf9 Month \cf2 == \cf10 2\cf2 ) ? (\cf8 IsLeapYear\cf2 (\cf9 Year\cf2 ) ? \cf10 29 \cf2 : \cf10 28\cf2 ) : \cf9 Days\cf2 [\cf9 Month \cf2 - \cf10 1\cf2 ];\
+\}\
+\
+\cf6 bool \cf8 IsLastDayInMonth\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf4 return \cf2 (\cf9 Date\cf2 .\cf6 Day \cf2 == \cf8 NumberOfDaysInMonth\cf2 (\cf9 Date\cf2 .\cf6 Month\cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 ));\
+\
+\}\
+\
+\cf6 bool \cf8 IsLastMonthInYear\cf2 (\cf6 short \cf9 Month\cf2 )\
+\{\
+    \cf4 return \cf2 (\cf9 Month \cf2 == \cf10 12\cf2 );\
+\}\
+\
+\cf6 bool \cf8 IsDate1BeforeDate2\cf2 (\cf7 stDate \cf9 Date1\cf2 , \cf7 stDate \cf9 Date2\cf2 )\
+\{\
+    \cf4 return  \cf2 (\cf9 Date1\cf2 .\cf6 Year \cf2 < \cf9 Date2\cf2 .\cf6 Year\cf2 ) ? \cf6 true \cf2 :\
+    ((\cf9 Date1\cf2 .\cf6 Year \cf2 == \cf9 Date2\cf2 .\cf6 Year\cf2 ) ? (\cf9 Date1\cf2 .\cf6 Month \cf2 < \cf9 Date2\cf2 .\cf6 Month \cf2 ? \cf6 true \cf2 :\
+    (\cf9 Date1\cf2 .\cf6 Month \cf2 == \cf9 Date2\cf2 .\cf6 Month \cf2 ? \cf9 Date1\cf2 .\cf6 Day \cf2 < \cf9 Date2\cf2 .\cf6 Day \cf2 : \cf6 false\cf2 )) : \cf6 false\cf2 );\
+\}\
+\
+\cf7 stDate \cf8 IncreeseDateByOneDay\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+	\cf4 if \cf2 (\cf8 IsLastDayInMonth\cf2 (\cf9 Date\cf2 ))\
+	\{\
+		\cf4 if \cf2 (\cf8 IsLastMonthInYear\cf2 (\cf9 Date\cf2 .\cf6 Month\cf2 ))\
+		\{\
+			\cf9 Date\cf2 .\cf6 Month \cf2 = \cf10 1\cf2 ;\
+			\cf9 Date\cf2 .\cf6 Day \cf2 = \cf10 1\cf2 ;\
+			\cf9 Date\cf2 .\cf6 Year\cf2 ++;\
+		\}\
+		\cf4 else\
+		\cf2 \{\
+			\cf9 Date\cf2 .\cf6 Day \cf2 = \cf10 1\cf2 ;\
+			\cf9 Date\cf2 .\cf6 Month\cf2 ++;\
+		\}\
+	\}\
+	\cf4 else\
+	\cf2 \{\
+		\cf9 Date\cf2 .\cf6 Day\cf2 ++;\
+	\}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\
+\
+\
+\cf6 int \cf8 GetDiffernceDaysInDate\cf2 (\cf7 stDate \cf9 Date1 \cf2 , \cf7 stDate \cf9 Date2 \cf2 , \cf6 bool \cf9 IncludeEndDay \cf2 = \cf6 false\cf2 )\
+\{\
+\
+     \cf6 int \cf9 Days \cf2 = \cf10 0\cf2 ;\
+     \cf4 while \cf2 (\cf8 IsDate1BeforeDate2\cf2 (\cf9 Date1\cf2 , \cf9 Date2\cf2 ))\
+     \{\
+\
+         \cf9 Days\cf2 ++;\
+         \cf9 Date1 \cf2 = \cf8 IncreeseDateByOneDay\cf2 (\cf9 Date1\cf2 );\
+     \}\
+\
+     \cf4 return \cf9 IncludeEndDay \cf2 ? ++\cf9 Days \cf2 : \cf9 Days\cf2 ;\
+\}\
+\
+\
+\
+\
+\cf11 // Day Sorting In Week\
+\cf6 short \cf8 DayOfWeekOrder\cf2 (\cf6 short \cf9 Day\cf2 , \cf6 short \cf9 Month\cf2 , \cf6 short \cf9 Year\cf2 )\
+\{\
+	\cf6 short \cf9 A\cf2 , \cf9 Y\cf2 , \cf9 M\cf2 ;\
+	 \cf9 A \cf2 = (\cf10 14 \cf2 - \cf9 Month\cf2 ) / \cf10 12\cf2 ;\
+	 \cf9 Y \cf2 = \cf9 Year \cf2 - \cf9 A\cf2 ;\
+	 \cf9 M \cf2 = \cf9 Month \cf2 + (\cf10 12 \cf2 * \cf9 A\cf2 ) - \cf10 2\cf2 ;\
+\
+	\cf4 return \cf2 (\cf9 Day \cf2 + \cf9 Y \cf2 + (\cf9 Y\cf2 /\cf10 4\cf2 ) - (\cf9 Y\cf2 /\cf10 100\cf2 ) + (\cf9 Y\cf2 /\cf10 400\cf2 ) + ((\cf10 31\cf2 *\cf9 M\cf2 )/\cf10 12\cf2 )) % \cf10 7\cf2 ;\
+\
+\}\
+\cf6 short \cf8 DayOfWeekOrder\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+    \cf4 return \cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 .\cf6 Year \cf2 , \cf9 Date\cf2 .\cf6 Month \cf2 , \cf9 Date\cf2 .\cf6 Day\cf2 );\
+\}\
+\cf7 string \cf8 DayName\cf2 (\cf6 short \cf9 DayOfWeekOrder\cf2 )\
+\{\
+\
+	\cf7 string \cf9 ArrDayNames\cf2 [] = \{ \cf5 "Sun" \cf2 , \cf5 "Mon" \cf2 ,\cf5 "Tues" \cf2 , \cf5 "Wed" \cf2 , \cf5 "Thu" \cf2 , \cf5 "Fri" \cf2 , \cf5 "Sat" \cf2 \};\
+	\cf4 return \cf9 ArrDayNames\cf2 [\cf9 DayOfWeekOrder\cf2 -\cf10 1\cf2 ];\
+\
+\}\
+\
+\cf11 //weekend\
+\cf6 short \cf8 IsEndOfWeek\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf4 return \cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 ) == \cf10 6\cf2 ;\
+\
+\}\
+\cf6 bool \cf8 IsWeekEnd\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf6 short \cf9 DayIndex \cf2 = \cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 );\
+    \cf4 return \cf2 (\cf9 DayIndex \cf2 == \cf10 5 \cf2 || \cf9 DayIndex \cf2 == \cf10 6\cf2 );\
+\
+\}\
+\
+\cf11 //bussinis day\
+\cf6 bool \cf8 IsBusinessDay\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+\
+    \cf11 /*\
+    short DayIndex = DayOfWeekOrder(Date);\
+    return (DayIndex >= 5 && DayIndex <= 4) ;\
+    */\
+\
+    \cf4 return \cf2 !\cf8 IsWeekEnd\cf2 (\cf9 Date\cf2 );\
+\
+\}\
+\
+\
+\cf6 short \cf8 DaysUntilTheEndOfWeek\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+    \cf4 return \cf10 6 \cf2 - \cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 );\
+\}\
+\
+\
+\cf11 // Day until the end of weekend\
+\cf6 short \cf8 DaysUntilTheEndOfMonth\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf7 stDate \cf9 EndOfMonthDate \cf2 ;\
+    \cf9 EndOfMonthDate\cf2 .\cf6 Day \cf2 = \cf8 NumberOfDaysInMonth\cf2 (\cf9 Date\cf2 .\cf6 Month \cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 );\
+\
+    \cf9 EndOfMonthDate\cf2 .\cf6 Month \cf2 = \cf9 Date\cf2 .\cf6 Month\cf2 ;\
+    \cf9 EndOfMonthDate\cf2 .\cf6 Year \cf2 = \cf9 Date\cf2 .\cf6 Year\cf2 ;\
+\
+\
+    \cf4 return \cf8 GetDiffernceDaysInDate\cf2 (\cf9 Date \cf2 , \cf9 EndOfMonthDate \cf2 , \cf6 true\cf2 );\
+\
+\}\
+\
+\cf6 short \cf8 DayUntilTheEndOfYear\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf7 stDate \cf9 EndOfYearDate \cf2 ;\
+    \cf9 EndOfYearDate\cf2 .\cf6 Day \cf2 = \cf10 31 \cf2 ;\
+    \cf9 EndOfYearDate\cf2 .\cf6 Month \cf2 = \cf10 12 \cf2 ;\
+    \cf9 EndOfYearDate\cf2 .\cf6 Year \cf2 = \cf9 Date\cf2 .\cf6 Year \cf2 ;\
+\
+    \cf4 return \cf8 GetDiffernceDaysInDate\cf2 (\cf9 Date \cf2 , \cf9 EndOfYearDate \cf2 , \cf6 true\cf2 );\
+\
+\}\
+\
+\
+\
+\
+\cf6 void \cf8 PrintingDateAndDayName\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf9 cout \cf8 <<\cf5 "\cf12 \\n\\n\cf5 Today is " \cf8 << DayName\cf2 (\cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 .\cf6 Year \cf2 , \cf9 Date\cf2 .\cf6 Month \cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 ))\
+    \cf8 << \cf5 "  ,  " \cf8 << \cf9 Date\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+\}\
+\
+\cf7 stDate \cf8 GetSystemDate\cf2 ()\
+\{\
+\
+    \cf7 stDate \cf9 Date \cf2 ;\
+    \cf7 time_t \cf9 t \cf2 = \cf8 time\cf2 (\cf10 0\cf2 );\
+    \cf7 tm\cf2 * \cf9 now \cf2 = \cf8 localtime\cf2 (&\cf9 t\cf2 );\
+\
+    \cf9 Date\cf2 .\cf6 Year \cf2 = \cf9 now\cf2 ->\cf6 tm_year \cf2 + \cf10 1900\cf2 ;\
+    \cf9 Date\cf2 .\cf6 Month \cf2 = \cf9 now\cf2 -> \cf6 tm_mon \cf2 + \cf10 1 \cf2 ;\
+    \cf9 Date\cf2 .\cf6 Day \cf2 = \cf9 now\cf2 ->\cf6 tm_mday \cf2 ;\
+    \cf4 return \cf9 Date\cf2 ;\
+\
+\}\
+\
+\
+\
+\
+\
+\
+\cf6 int \cf8 main \cf2 () \{\
+\
+    \cf7 stDate \cf9 Date \cf2 = \cf8 GetSystemDate\cf2 ();\
+\
+    \cf8 PrintingDateAndDayName\cf2 (\cf9 Date\cf2 );\
+\
+    \cf11 // end week ?\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\cf5 Is It End Of Week ? \cf12 \\n\cf5 "\cf2 ;\
+    \cf4 if\cf2 (\cf8 IsEndOfWeek\cf2 (\cf9 Date\cf2 ))\
+    \cf9 cout \cf8 << \cf5 "Yes it is Saturday, it's of Week." \cf8 << endl\cf2 ;\
+    \cf4 else\
+        \cf9 cout \cf8 << \cf5 "No it's Not end of week." \cf8 << endl\cf2 ;\
+\
+\
+    \cf11 // Is it Weekend ?\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\cf5 Is It Weekend ? \cf12 \\n\cf5 "\cf2 ;\
+    \cf4 if\cf2 (\cf8 IsWeekEnd\cf2 (\cf9 Date\cf2 ))\
+        \cf9 cout \cf8 << \cf5 "Yes it is a week end."\cf2 ;\
+    \cf4 else\
+        \cf9 cout \cf8 << \cf5 "No today is " \cf8 << DayName\cf2 (\cf8 DayOfWeekOrder\cf2 (\cf9 Date\cf2 )) \cf8 << \cf5 ", Not a weekend."\cf2 ;\
+\
+\
+    \cf11 // Is Business Day ?\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\\n\cf5 Is Business Day ?\cf12 \\n\cf5 "\cf2 ;\
+    \cf4 if\cf2 (\cf8 IsBusinessDay\cf2 (\cf9 Date\cf2 ))\
+        \cf9 cout \cf8 << \cf5 "Yes it is a business day." \cf8 << endl\cf2 ;\
+    \cf4 else\
+        \cf9 cout \cf8 << \cf5 "No it is NOT a business day." \cf8 << endl\cf2 ;\
+\
+\
+    \cf11 // Day Until Day of Week\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\\n\cf5 Days until end of week : " \cf8 << DaysUntilTheEndOfWeek\cf2 (\cf9 Date\cf2 ) \cf8 << \cf5 " Day(s). \cf12 \\n\\n\cf5 " \cf2 ;\
+\
+    \cf11 // Day Until Day of Month\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\cf5 Days until end of month : "\cf8 << DaysUntilTheEndOfMonth\cf2 (\cf9 Date\cf2 ) \cf8 << \cf5 " Day(s)."\cf2 ;\
+\
+    \cf11 // Day Until Day of Year\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\\n\cf5 Days until end of Year : " \cf8 << DayUntilTheEndOfYear\cf2 (\cf9 Date\cf2 ) \cf8 << \cf5 " Day(s). \cf12 \\n\\n\cf5 " \cf2 ;\
+\
+\
+\
+\
+\
+    \cf4 return \cf10 0\cf2 ;\
+\}\
+\
+}

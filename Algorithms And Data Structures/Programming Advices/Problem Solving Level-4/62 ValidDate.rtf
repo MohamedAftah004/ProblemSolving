@@ -1,0 +1,323 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red0\green128\blue128;\red47\green79\blue79;\red0\green128\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c50196;\csgenericrgb\c18431\c30980\c30980;\csgenericrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf0 \cb0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\
+\
+\cf4 struct\cf0  \cf5 stDate\cf0  \{\
+\
+    \cf4 short\cf0  Year;\
+    \cf4 short\cf0  Month;\
+    \cf4 short\cf0  Day;\
+\
+\};\
+\cf4 bool\cf0  IsDate1BeforeDate2(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 );\
+\
+\cf4 short\cf0  ReadYear()\
+\{\
+\
+    \cf4 short\cf0  Year = 0;\
+    cout \cf6 <<\cf0  \cf3 "Enter a Year To Check : "\cf0 ;\
+    cin \cf6 >>\cf0  Year;\
+    \cf4 return\cf0  Year;\
+\
+\}\
+\cf4 short\cf0  ReadMonth()\
+\{\
+\
+    \cf4 short\cf0  Month = 0;\
+\
+        cout \cf6 <<\cf0  \cf3 "Enter Month To Check : "\cf0 ;\
+        cin \cf6 >>\cf0  Month;\
+    \cf4 return\cf0  Month;\
+\}\
+\cf4 short\cf0  ReadDay()\
+\{\
+\
+    \cf4 short\cf0  Day = 0;\
+\
+        cout \cf6 <<\cf0  \cf3 "Enter Day To Check : "\cf0 ;\
+        cin \cf6 >>\cf0  Day;\
+\
+    \cf4 return\cf0  Day;\
+\}\
+\cf5 stDate\cf0  ReadFullDate()\
+\{\
+    \cf5 stDate\cf0  Date;\
+    Date.Day = ReadDay();\
+    Date.Month = ReadMonth();\
+    Date.Year = ReadYear();\
+\
+    \cf4 return\cf0  Date;\
+\}\
+\cf4 bool\cf0  IsLeapYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+\
+    \cf4 return\cf0  (\cf2 Year\cf0  % 400 == 0) || (\cf2 Year\cf0  % 100 != 0) && (\cf2 Year\cf0  % 4 == 0) ? \cf4 true\cf0  : \cf4 false\cf0 ;\
+\
+\}\
+\cf4 short\cf0  NumberOfDaysInMonth(\cf4 short\cf0  \cf2 Month\cf0 , \cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+\
+    \cf4 if\cf0  (\cf2 Month\cf0  > 12 || \cf2 Month\cf0  < 1)\
+        \cf4 return\cf0  0;\
+\
+    \cf4 short\cf0  Days[12] = \{ 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 \};\
+\
+    \cf4 return\cf0  (\cf2 Month\cf0  == 2) ? (IsLeapYear(\cf2 Year\cf0 ) ? 29 : 28) : Days[\cf2 Month\cf0  - 1];\
+\}\
+\cf4 bool\cf0  IsLastDayInMonth(\cf5 stDate\cf0  \cf2 Date\cf0 )\
+\{\
+\
+    \cf4 return\cf0  (\cf2 Date\cf0 .Day == NumberOfDaysInMonth(\cf2 Date\cf0 .Month, \cf2 Date\cf0 .Year));\
+\
+\}\
+\cf4 bool\cf0  IsLastMonthInYear(\cf4 short\cf0  \cf2 Month\cf0 )\
+\{\
+    \cf4 return\cf0  (\cf2 Month\cf0  == 12);\
+\}\
+\cf5 stDate\cf0  IncreeseDateByOneDay(\cf5 stDate\cf0  \cf2 Date\cf0 )\
+\{\
+\
+    \cf4 if\cf0  (IsLastDayInMonth(\cf2 Date\cf0 ))\
+    \{\
+        \cf4 if\cf0  (IsLastMonthInYear(\cf2 Date\cf0 .Month))\
+        \{\
+            \cf2 Date\cf0 .Month = 1;\
+            \cf2 Date\cf0 .Day = 1;\
+            \cf2 Date\cf0 .Year++;\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            \cf2 Date\cf0 .Day = 1;\
+            \cf2 Date\cf0 .Month++;\
+        \}\
+    \}\
+    \cf4 else\cf0 \
+    \{\
+        \cf2 Date\cf0 .Day++;\
+    \}\
+\
+    \cf4 return\cf0  \cf2 Date\cf0 ;\
+\}\
+\cf4 int\cf0  GetDiffernceDaysInDate(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 , \cf4 bool\cf0  \cf2 IncludeEndDay\cf0  = \cf4 false\cf0 )\
+\{\
+\
+    \cf4 int\cf0  Days = 0;\
+    \cf4 while\cf0  (IsDate1BeforeDate2(\cf2 Date1\cf0 , \cf2 Date2\cf0 ))\
+    \{\
+\
+        Days++;\
+        \cf2 Date1\cf0  \cf6 =\cf0  IncreeseDateByOneDay(\cf2 Date1\cf0 );\
+    \}\
+\
+    \cf4 return\cf0  \cf2 IncludeEndDay\cf0  ? ++Days : Days;\
+\}\
+\
+\
+\cf4 bool\cf0  IsDate1BeforeDate2(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 )\
+\{\
+    \cf4 return\cf0   (\cf2 Date1\cf0 .Year < \cf2 Date2\cf0 .Year) ? \cf4 true\cf0  :\
+        ((\cf2 Date1\cf0 .Year == \cf2 Date2\cf0 .Year) ? (\cf2 Date1\cf0 .Month < \cf2 Date2\cf0 .Month ? \cf4 true\cf0  :\
+            (\cf2 Date1\cf0 .Month == \cf2 Date2\cf0 .Month ? \cf2 Date1\cf0 .Day < \cf2 Date2\cf0 .Day : \cf4 false\cf0 )) : \cf4 false\cf0 );\
+\}\
+\cf4 bool\cf0  IsDate1EqualsDate2(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 )\
+\{\
+\
+    \cf4 return\cf0  (\cf2 Date1\cf0 .Day == \cf2 Date2\cf0 .Day && \cf2 Date1\cf0 .Month == \cf2 Date2\cf0 .Month && \cf2 Date1\cf0 .Year == \cf2 Date2\cf0 .Year) ? \cf4 true\cf0  : \cf4 false\cf0 ;\
+\}\
+\cf4 bool\cf0  IsDate1AfterDate2(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 )\
+\{\
+\
+    \cf4 return\cf0  (!IsDate1BeforeDate2(\cf2 Date1\cf0 , \cf2 Date2\cf0 )) ? ((!IsDate1EqualsDate2(\cf2 Date1\cf0 , \cf2 Date2\cf0 )) ? \cf4 true\cf0  : \cf4 false\cf0 ) : \cf4 false\cf0 ;\
+\
+\}\
+\
+\cf4 enum\cf0  \cf5 enCompare\cf0  \{ \cf7 Before\cf0  = -1, \cf7 Equal\cf0  = 0, \cf7 After\cf0  = 1 \};\
+\cf5 enCompare\cf0  CompareDates(\cf5 stDate\cf0  \cf2 Date1\cf0 , \cf5 stDate\cf0  \cf2 Date2\cf0 )\
+\{\
+\
+    \cf4 if\cf0  (IsDate1BeforeDate2(\cf2 Date1\cf0 , \cf2 Date2\cf0 ))\
+        \cf4 return\cf0  \cf5 enCompare\cf0 ::\cf7 Before\cf0 ;\
+\
+    \cf4 if\cf0  (IsDate1EqualsDate2(\cf2 Date1\cf0 , \cf2 Date2\cf0 ))\
+        \cf4 return\cf0  \cf5 enCompare\cf0 ::\cf7 Equal\cf0 ;\
+\
+\
+    \cf4 return\cf0  \cf5 enCompare\cf0 ::\cf7 After\cf0 ;\
+\
+\}\
+\
+\cf4 struct\cf0  \cf5 stPeriod\cf0 \
+\{\
+    \cf5 stDate\cf0  DateStart;\
+    \cf5 stDate\cf0  DateEnd;\
+\};\
+\cf5 stPeriod\cf0  ReadPeriod()\
+\{\
+\
+    system(\cf3 "cls"\cf0 );\
+    \cf5 stPeriod\cf0  Period;\
+    cout \cf6 <<\cf0  \cf3 "\\nEnter Start Date : \\n"\cf0 ;\
+    Period.DateStart \cf6 =\cf0  ReadFullDate();\
+\
+    cout \cf6 <<\cf0  \cf3 "\\nEnter End Date : \\n"\cf0 ;\
+    Period.DateEnd \cf6 =\cf0  ReadFullDate();\
+\
+    \cf4 return\cf0  Period;\
+\}\
+\
+\cf4 bool\cf0  IsOverLapPeriod(\cf5 stPeriod\cf0  \cf2 Period1\cf0 , \cf5 stPeriod\cf0  \cf2 Period2\cf0 )\
+\{\
+\
+    \cf4 if\cf0  (\
+        CompareDates(\cf2 Period2\cf0 .DateEnd, \cf2 Period1\cf0 .DateStart) == \cf5 enCompare\cf0 ::\cf7 Before\cf0 \
+        ||\
+        CompareDates(\cf2 Period2\cf0 .DateStart, \cf2 Period1\cf0 .DateEnd) == \cf5 enCompare\cf0 ::\cf7 After\cf0 \
+        )\
+        \cf4 return\cf0  \cf4 false\cf0 ;\
+    \cf4 else\cf0 \
+        \cf4 return\cf0  \cf4 true\cf0 ;\
+\
+\}\
+\
+\cf4 bool\cf0  IsDateInPeriod(\cf5 stDate\cf0  \cf2 Date\cf0 , \cf5 stPeriod\cf0  \cf2 Period\cf0 )\
+\{\
+\
+    \cf8 // before -> less than   -   after -> greatest than\cf0 \
+\
+    \cf4 return\cf0  !(CompareDates(\cf2 Date\cf0 , \cf2 Period\cf0 .DateStart) == \cf5 enCompare\cf0 ::\cf7 Before\cf0  || CompareDates(\cf2 Date\cf0 , \cf2 Period\cf0 .DateEnd) == \cf5 enCompare\cf0 ::\cf7 After\cf0 );\
+\
+\}\
+\
+\
+\cf4 short\cf0  OverLapCount(\cf5 stPeriod\cf0  \cf2 Period1\cf0 , \cf5 stPeriod\cf0  \cf2 Period2\cf0 )\
+\{\
+\
+    \cf4 return\cf0   GetDiffernceDaysInDate(\cf2 Period2\cf0 .DateStart, \cf2 Period1\cf0 .DateEnd);\
+\
+\}\
+\
+\cf4 int\cf0  PeriodLengthInDays(\cf5 stPeriod\cf0  \cf2 Period\cf0 , \cf4 bool\cf0  \cf2 IncludeEndDate\cf0  = \cf4 false\cf0 )\
+\{\
+    \cf4 return\cf0  GetDiffernceDaysInDate(\cf2 Period\cf0 .DateStart, \cf2 Period\cf0 .DateEnd, \cf2 IncludeEndDate\cf0 );\
+\}\
+\
+\
+\
+\cf4 int\cf0  CountOVerLapDays(\cf5 stPeriod\cf0  \cf2 Period1\cf0 , \cf5 stPeriod\cf0  \cf2 Period2\cf0 )\
+\{\
+\
+    \cf4 int\cf0  Period1Length = PeriodLengthInDays(\cf2 Period1\cf0 , \cf4 true\cf0 );\
+    \cf4 int\cf0  Period2Length = PeriodLengthInDays(\cf2 Period2\cf0 , \cf4 true\cf0 );\
+    \cf4 int\cf0  OverLapDays = 0;\
+\
+    \cf4 if\cf0  (!IsOverLapPeriod(\cf2 Period1\cf0 , \cf2 Period2\cf0 ))\
+    \{\
+        \cf4 return\cf0  0;\
+    \}\
+\
+    \cf4 if\cf0  (Period1Length < Period2Length)\
+    \{\
+\
+        \cf4 while\cf0  (IsDate1BeforeDate2(\cf2 Period1\cf0 .DateStart, \cf2 Period2\cf0 .DateEnd))\
+        \{\
+\
+\
+            \cf4 if\cf0  (IsDateInPeriod(\cf2 Period1\cf0 .DateStart, \cf2 Period2\cf0 ))\
+                OverLapDays++;\
+\
+\
+            \cf2 Period1\cf0 .DateStart \cf6 =\cf0  IncreeseDateByOneDay(\cf2 Period1\cf0 .DateStart);\
+\
+        \}\
+    \}\
+    \cf4 else\cf0 \
+    \{\
+\
+        \cf4 while\cf0  (IsDate1BeforeDate2(\cf2 Period2\cf0 .DateStart, \cf2 Period2\cf0 .DateEnd))\
+        \{\
+\
+            \cf4 if\cf0  (IsDateInPeriod(\cf2 Period2\cf0 .DateStart, \cf2 Period1\cf0 ))\
+                OverLapDays++;\
+\
+            \cf2 Period2\cf0 .DateStart \cf6 =\cf0  IncreeseDateByOneDay(\cf2 Period2\cf0 .DateStart);\
+\
+        \}\
+\
+    \}\
+\
+\
+    \cf4 return\cf0  OverLapDays;\
+\
+\}\
+\
+\
+\cf4 bool\cf0  IsValidDate(\cf5 stDate\cf0  \cf2 Date\cf0 )\
+\{\
+\
+\
+    \cf4 if\cf0  (\cf2 Date\cf0 .Day > 31 || \cf2 Date\cf0 .Day < 1)\
+        \cf4 return\cf0  \cf4 false\cf0 ;\
+\
+    \cf4 if\cf0  (\cf2 Date\cf0 .Month > 12 || \cf2 Date\cf0 .Month < 1)\
+        \cf4 return\cf0  \cf4 false\cf0 ;\
+\
+\
+\
+    \cf4 if\cf0  (\cf2 Date\cf0 .Month == 2)\
+    \{\
+        \cf4 if\cf0  (IsLeapYear(\cf2 Date\cf0 .Year))\
+\
+        \{\
+            \cf4 if\cf0  (\cf2 Date\cf0 .Day > 29)\
+                \cf4 return\cf0  \cf4 false\cf0 ;\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+\
+            \cf4 if\cf0  (\cf2 Date\cf0 .Day > 28)\
+                \cf4 return\cf0  \cf4 false\cf0 ;\
+        \}\
+\
+    \}\
+    \
+    \cf4 short\cf0  DaysInMonth = NumberOfDaysInMonth(\cf2 Date\cf0 .Month, \cf2 Date\cf0 .Year);\
+    \cf4 if\cf0  (\cf2 Date\cf0 .Day > DaysInMonth)\
+        \cf4 return\cf0  \cf4 false\cf0 ;\
+    \
+    \cf4 return\cf0  \cf4 true\cf0 ;\
+\
+\
+\
+\}\
+\
+\cf4 int\cf0  main() \{\
+\
+    system(\cf3 "cls"\cf0 );\
+\
+    \cf5 stDate\cf0  Date = ReadFullDate();\
+\
+\
+    \cf4 if\cf0  (IsValidDate(Date))\
+        cout \cf6 <<\cf0  \cf3 "\\nYes, Is a Valid Date : \\n"\cf0 ;\
+    \cf4 else\cf0 \
+        cout \cf6 <<\cf0  \cf3 "\\nNo, Date Is NOT a Valid Date :\\n"\cf0 ;\
+\
+\
+\
+    system(\cf3 "pause>0"\cf0 );\
+    \cf4 return\cf0  main();\
+\}\
+\
+\
+}

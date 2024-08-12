@@ -1,0 +1,176 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red25\green60\blue255;\red255\green255\blue255;}
+{\*\expandedcolortbl;;\cssrgb\c12594\c35385\c100000;\cssrgb\c100000\c100000\c99985\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28300\viewh16080\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 #include <iostream>\
+using namespace std;\
+\
+short ReadYear()\
+\{\
+\
+	short Year = 0;\
+	cout << "Enter a Year To Check : ";\
+	cin >> Year;\
+	return Year;\
+\
+\}\
+\
+short ReadMonth()\
+\{\
+\
+	short Month = 0;\
+\
+	do \{\
+		cout << "Enter Month To Check : ";\
+		cin >> Month;\
+	\} while (Month > 12 || Month < 1);\
+\
+	return Month;\
+\}\
+\
+short ReadDay()\
+\{\
+\
+	short Day = 0;\
+\
+	do \{\
+		cout << "Enter Day To Check : ";\
+		cin >> Day;\
+	\} while (Day > 31 || Day < 1);\
+\
+	return Day;\
+\}\
+\
+struct sDate\
+\{\
+\
+	short Day;\
+	short Month;\
+	short Year;\
+\
+\};\
+\
+\
+//is Leap year\
+bool IsLeapYear(short Year) \{\
+\
+	return ((Year % 400 == 0) || (Year % 100 != 0) && (Year % 4 == 0)) ? true : false;\
+\
+\}\
+//Number Of Days\
+short NumberOfDaysInMonth(short Month, short Year)\
+\{\
+\
+	if (Month > 12 || Month < 1)\
+		return 0;\
+\
+	int Days[12]\{ 31,28,31,30,31,30,31,31,30,31,30,31 \};\
+\
+	return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : Days[Month - 1];\
+\
+\}\
+\
+\
+bool IsDate1BeforeDate2(sDate Date1, sDate Date2)\
+\{\
+	return  (Date1.Year < Date2.Year) ? true :\
+		((Date1.Year == Date2.Year) ? (Date1.Month < Date2.Month ? true :\
+			(Date1.Month == Date2.Month ? Date1.Day < Date2.Day : false)) : false);\
+\}\
+\
+sDate ReadFullDate()\
+\{\
+\
+	sDate Date;\
+	Date.Day = ReadDay();\
+	Date.Month = ReadMonth();\
+	Date.Year = ReadYear();\
+	cout << "\\n\\n";\
+\
+	return Date;\
+\}\
+\
+bool IsLastDayInMonth(sDate Date)\
+\{\
+	return (Date.Day == NumberOfDaysInMonth(Date.Month, Date.Year)) ? true : false;\
+\}\
+\
+bool IsLastMonthInYear(short Month)\
+\{\
+	return (Month == 12);\
+\}\
+\
+\
+sDate IncreeseDateByOneDay(sDate Date)\
+\{\
+\
+	if (IsLastDayInMonth(Date))\
+	\{\
+		if (IsLastMonthInYear(Date.Month))\
+		\{\
+			Date.Month = 1;\
+			Date.Day = 1;\
+			Date.Year++;\
+		\}\
+		else\
+		\{\
+			Date.Day = 1;\
+			Date.Month++;\
+		\}\
+	\}\
+	else\
+	\{\
+		Date.Day++;\
+	\}\
+\
+\
+	return Date;\
+\}\
+\
+sDate SystemDate()\
+\{\
+	sDate Date;\
+	Date.Year = 2023;\
+	Date.Month = 3;\
+	Date.Day = 12;\
+	cout << "\\n\\n";\
+\
+	return Date;\
+\
+\}\
+\
+int GetDifferenceInDays(sDate Date1, sDate Date2, bool IncludeEndDay = false)\
+\{\
+	int Days = 0;\
+\
+	while (IsDate1BeforeDate2(Date1, Date2))\
+	\{\
+\
+		Days++;\
+		Date1 = IncreeseDateByOneDay(Date1);\
+\
+	\}\
+\
+	return IncludeEndDay ? ++Days : Days;\
+\}\
+\
+int main()\
+\{\
+\
+	sDate Date1 = ReadFullDate();\
+	sDate SysDate = SystemDate();\
+\
+	//Print Original Date Before Adding (1) Day\
+\
+\
+\
+	cout << "Your Age By Days                   -> " << GetDifferenceInDays(Date1, SysDate) << endl;\
+	cout << "Your Age By Days , And Sum Today   -> " << GetDifferenceInDays(Date1, SysDate, true) << endl;\
+\
+\
+\
+	return 0;\
+\}}

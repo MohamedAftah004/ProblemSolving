@@ -1,0 +1,91 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red0\green0\blue0;\red163\green21\blue21;
+\red0\green0\blue255;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgray\c0\c0;\csgenericrgb\c63922\c8235\c8235;
+\csgenericrgb\c0\c0\c100000;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb3 #include\cf0  \cf4 <iostream>\cf0 \
+\cf2 #include\cf0  \cf4 <string>\cf0 \
+\cf5 using\cf0  \cf5 namespace\cf0  std;\
+\
+\
+\cf5 short\cf0  ReadYear()\
+\{\
+	\cf5 short\cf0  Year = 0;\
+	cout \cf6 <<\cf0  \cf4 "Please enter a year to check : "\cf0 ; cin \cf6 >>\cf0  Year; \cf5 return\cf0  Year;\
+\}\
+\
+\cf5 short\cf0  ReadMonth()\
+\{\
+	\cf5 short\cf0  Month = 0;\
+	cout \cf6 <<\cf0  \cf4 "Please enter a month to check : "\cf0 ; cin \cf6 >>\cf0  Month; \cf5 return\cf0  Month;\
+\}\
+\
+\cf5 bool\cf0  IsLeapYear(\cf5 short\cf0  \cf2 Year\cf0 )\
+\{\
+	\cf5 return\cf0  \cf2 Year\cf0  % 4 == 0 && \cf2 Year\cf0  % 100 != 0 || \cf2 Year\cf0  % 400 == 0; \
+\}\
+\
+\cf5 bool\cf0  IsLeapMonth(\cf5 short\cf0  \cf2 Year\cf0 , \cf5 short\cf0  \cf2 Month\cf0 )\
+\{\
+	\cf5 return\cf0  IsLeapYear(\cf2 Year\cf0 ) && \cf2 Month\cf0  == 2;\
+\}\
+\
+\cf5 short\cf0  NumberOfDaysInMonth(\cf5 short\cf0  \cf2 Year\cf0  , \cf5 short\cf0  \cf2 Month\cf0 )\
+\{\
+\
+	\cf5 if\cf0  (\cf2 Month\cf0  < 1 || \cf2 Month\cf0  > 12)\
+		\cf5 return\cf0  0;\
+\
+\
+	\cf5 if\cf0  (\cf2 Month\cf0  == 2)\
+	\{\
+		\cf5 return\cf0  IsLeapYear(\cf2 Year\cf0 );\
+	\}\
+\
+	\cf5 short\cf0  Arr31DaysInMonth[7] = \{ 1 , 3 , 5 , 7 , 8 , 10 , 12 \};\
+\
+	\cf5 for\cf0  (\cf5 short\cf0  i = 1 ; i <= 7; i++)\
+	\{\
+		\cf5 if\cf0  (Arr31DaysInMonth[i - 1] == \cf2 Month\cf0 )\
+			\cf5 return\cf0  31;\
+	\}\
+\
+	\cf5 return\cf0  30; \
+\
+\}\
+\
+\cf5 short\cf0  NumberOfHoursInMonth(\cf5 short\cf0  \cf2 Year\cf0 , \cf5 short\cf0  \cf2 Month\cf0 )\
+\{\
+	\cf5 return\cf0  NumberOfDaysInMonth(\cf2 Year\cf0 , \cf2 Month\cf0 ) * 24;\
+\}\
+\
+\cf5 int\cf0  NumberOfMinutesInMonth(\cf5 short\cf0  \cf2 Year\cf0 , \cf5 short\cf0  \cf2 Month\cf0 )\
+\{\
+	\cf5 return\cf0  NumberOfHoursInMonth(\cf2 Year\cf0 , \cf2 Month\cf0 ) * 60;\
+\}\
+\
+\cf5 int\cf0  NumberOfSecondsInMonth(\cf5 short\cf0  \cf2 Year\cf0 , \cf5 short\cf0  \cf2 Month\cf0 )\
+\{\
+	\cf5 return\cf0  NumberOfMinutesInMonth(\cf2 Year\cf0 , \cf2 Month\cf0 ) * 60;\
+\}\
+\
+\
+\cf5 int\cf0  main()\
+\{\
+\
+	\cf5 short\cf0  Year = ReadYear();\
+	\cf5 short\cf0  Month = ReadMonth();\
+\
+	cout \cf6 <<\cf0  \cf4 "\\nNumber Of Days In Month    ["\cf0  \cf6 <<\cf0  Month \cf6 <<\cf0  \cf4 "] is "\cf0  \cf6 <<\cf0  NumberOfDaysInMonth(Year , Month) \cf6 <<\cf0  endl;\
+	cout \cf6 <<\cf0  \cf4 "Number Of Hours In Month   ["\cf0  \cf6 <<\cf0  Month \cf6 <<\cf0  \cf4 "] is "\cf0  \cf6 <<\cf0  NumberOfHoursInMonth(Year, Month) \cf6 <<\cf0  endl;\
+	cout \cf6 <<\cf0  \cf4 "Number Of Minutes In Month ["\cf0  \cf6 <<\cf0  Month \cf6 <<\cf0  \cf4 "] is "\cf0  \cf6 <<\cf0  NumberOfMinutesInMonth(Year, Month) \cf6 <<\cf0  endl;\
+	cout \cf6 <<\cf0  \cf4 "Number Of Seconds In Month ["\cf0  \cf6 <<\cf0  Month \cf6 <<\cf0  \cf4 "] is "\cf0  \cf6 <<\cf0  NumberOfSecondsInMonth(Year, Month) \cf6 <<\cf0  endl;\
+\
+\
+\
+	\cf5 return\cf0  0;\
+\}}

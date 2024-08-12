@@ -1,0 +1,148 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red0\green128\blue128;\red43\green145\blue175;\red0\green128\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c0\c50196\c50196;\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #include\cf0  \cf3 <iostream>\cf0 \
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\cf4 short\cf0  ReadYear()\
+\{\
+\
+	\cf4 short\cf0  Year = 0;\
+	cout \cf5 <<\cf0  \cf3 "Enter a Year To Check : "\cf0 ;\
+	cin \cf5 >>\cf0  Year;\
+	\cf4 return\cf0  Year;\
+\
+\}\
+\
+\cf4 short\cf0  ReadMonth()\
+\{\
+\
+	\cf4 short\cf0  Month = 0;\
+\
+	\cf4 do\cf0  \{\
+		cout \cf5 <<\cf0  \cf3 "Enter Month To Check : "\cf0 ;\
+		cin \cf5 >>\cf0  Month;\
+	\} \cf4 while\cf0  (Month > 12 || Month < 1);\
+\
+	\cf4 return\cf0  Month;\
+\}\
+\
+\cf4 short\cf0  ReadDay()\
+\{\
+\
+	\cf4 short\cf0  Day = 0;\
+\
+	\cf4 do\cf0  \{\
+		cout \cf5 <<\cf0  \cf3 "Enter Day To Check : "\cf0 ;\
+		cin \cf5 >>\cf0  Day;\
+	\} \cf4 while\cf0  (Day > 31 || Day < 1);\
+\
+	\cf4 return\cf0  Day;\
+\}\
+\
+\cf4 struct\cf0  \cf6 sDate\cf0 \
+\{\
+\
+	\cf4 short\cf0  Day;\
+	\cf4 short\cf0  Month;\
+	\cf4 short\cf0  Year;\
+\
+\};\
+\
+\
+\cf7 //is Leap year\cf0 \
+\cf4 bool\cf0  IsLeapYear(\cf4 short\cf0  \cf2 Year\cf0 ) \{\
+\
+	\cf4 return\cf0  ((\cf2 Year\cf0  % 400 == 0) || (\cf2 Year\cf0  % 100 != 0) && (\cf2 Year\cf0  % 4 == 0)) ? \cf4 true\cf0  : \cf4 false\cf0 ;\
+\
+\}\
+\cf7 //Number Of Days\cf0 \
+\cf4 short\cf0  NumberOfDaysInMonth(\cf4 short\cf0  \cf2 Month\cf0 , \cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+\
+	\cf4 if\cf0  (\cf2 Month\cf0  > 12 || \cf2 Month\cf0  < 1)\
+		\cf4 return\cf0  0;\
+\
+	\cf4 int\cf0  Days[12]\{ 31,28,31,30,31,30,31,31,30,31,30,31 \};\
+\
+	\cf4 return\cf0  (\cf2 Month\cf0  == 2) ? (IsLeapYear(\cf2 Year\cf0 ) ? 29 : 28) : Days[\cf2 Month\cf0  - 1];\
+\
+\}\
+\
+\
+\
+\
+\cf6 sDate\cf0  ReadFullDate()\
+\{\
+\
+	\cf6 sDate\cf0  Date;\
+	Date.Day = ReadDay();\
+	Date.Month = ReadMonth();\
+	Date.Year = ReadYear();\
+	cout \cf5 <<\cf0  \cf3 "\\n\\n"\cf0 ;\
+\
+	\cf4 return\cf0  Date;\
+\}\
+\
+\cf4 bool\cf0  IsLastDayInMonth(\cf6 sDate\cf0  \cf2 Date\cf0 )\
+\{\
+	\cf4 return\cf0  (\cf2 Date\cf0 .Day == NumberOfDaysInMonth(\cf2 Date\cf0 .Month, \cf2 Date\cf0 .Year)) ? \cf4 true\cf0  : \cf4 false\cf0 ;\
+\}\
+\
+\cf4 bool\cf0  IsLastMonthInYear(\cf4 short\cf0  \cf2 Month\cf0 )\
+\{\
+	\cf4 return\cf0  (\cf2 Month\cf0  == 12);\
+\}\
+\
+\
+\cf6 sDate\cf0  IncreeseDateByOneDay(\cf6 sDate\cf0  \cf2 Date\cf0 )\
+\{\
+\
+	\cf4 if\cf0  (IsLastDayInMonth(\cf2 Date\cf0 ))\
+	\{\
+		\cf4 if\cf0  (IsLastMonthInYear(\cf2 Date\cf0 .Month))\
+		\{\
+			\cf2 Date\cf0 .Month = 1;\
+			\cf2 Date\cf0 .Day = 1;\
+			\cf2 Date\cf0 .Year++;\
+		\}\
+		\cf4 else\cf0 \
+		\{\
+			\cf2 Date\cf0 .Day = 1;\
+			\cf2 Date\cf0 .Month++;\
+		\}\
+	\}\
+	\cf4 else\cf0 \
+	\{\
+		\cf2 Date\cf0 .Day++;\
+	\}\
+\
+\
+	\cf4 return\cf0  \cf2 Date\cf0 ;\
+\}\
+\
+\
+\
+\cf4 int\cf0  main()\
+\{\
+\
+	\cf6 sDate\cf0  Date = ReadFullDate();\
+\
+\
+	\cf7 //Print Original Date Before Adding (1) Day\cf0 \
+	cout \cf5 <<\cf0  \cf3 "Before -> "\cf0  \cf5 <<\cf0  Date.Day \cf5 <<\cf0  \cf3 " / "\cf0  \cf5 <<\cf0  Date.Month \cf5 <<\cf0  \cf3 " / "\cf0  \cf5 <<\cf0  Date.Year \cf5 <<\cf0  endl;\
+\
+\
+	Date \cf5 =\cf0  IncreeseDateByOneDay(Date);\
+	\cf7 //Print Date After Adding (1) Day\cf0 \
+	cout \cf5 <<\cf0  \cf3 "After  -> "\cf0  \cf5 <<\cf0  Date.Day \cf5 <<\cf0  \cf3 " / "\cf0  \cf5 <<\cf0  Date.Month \cf5 <<\cf0  \cf3 " / "\cf0  \cf5 <<\cf0  Date.Year \cf5 <<\cf0  endl;\
+\
+\
+	\cf4 return\cf0  0;\
+\}}

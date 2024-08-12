@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 <string>\cf0 \
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\
+\
+\cf4 short\cf0  ReadYear()\
+\{\
+	cout \cf5 <<\cf0  \cf3 "Enter Year : "\cf0 ;\
+	\cf4 int\cf0  Year = 0; cin \cf5 >>\cf0  Year; \cf4 return\cf0  Year;\
+\}\
+\
+\cf4 bool\cf0  IsLeapYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+\
+	\cf4 return\cf0 (\cf2 Year\cf0  % 4 == 0 && \cf2 Year\cf0  % 100 != 0 || \cf2 Year\cf0  % 400 == 0) ;\
+\
+\}\
+\
+\cf4 short\cf0  NumberOfDaysInYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+	\cf4 return\cf0  IsLeapYear(\cf2 Year\cf0 ) ? 366 : 365;\
+\}\
+\
+\cf4 short\cf0  NumberOfHoursInYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+	\cf4 return\cf0  NumberOfDaysInYear(\cf2 Year\cf0 ) * 24;\
+\}\
+\
+\cf4 int\cf0  NumberOfMinutesInYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+	\cf4 return\cf0  NumberOfHoursInYear(\cf2 Year\cf0 ) * 60;\
+\}\
+\
+\cf4 int\cf0  NumberOfSecondsInYear(\cf4 short\cf0  \cf2 Year\cf0 )\
+\{\
+	\cf4 return\cf0  NumberOfMinutesInYear(\cf2 Year\cf0 ) * 60;\
+\}\
+\
+\cf4 int\cf0  main()\
+\{\
+\
+	\cf4 short\cf0  Year = ReadYear();\
+\
+	cout \cf5 <<\cf0  \cf3 "\\nNumber Of Days In Year    ["\cf0  \cf5 <<\cf0  Year \cf5 <<\cf0  \cf3 "] is "\cf0  \cf5 <<\cf0  NumberOfDaysInYear(Year) \cf5 <<\cf0  endl;\
+	cout \cf5 <<\cf0  \cf3 "Number Of Hours In Year   ["\cf0  \cf5 <<\cf0  Year \cf5 <<\cf0  \cf3 "] is "\cf0  \cf5 <<\cf0  NumberOfHoursInYear(Year) \cf5 <<\cf0  endl;\
+	cout \cf5 <<\cf0  \cf3 "Number Of Minutes In Year ["\cf0  \cf5 <<\cf0  Year \cf5 <<\cf0  \cf3 "] is "\cf0  \cf5 <<\cf0  NumberOfMinutesInYear(Year) \cf5 <<\cf0  endl;\
+	cout \cf5 <<\cf0  \cf3 "Number Of Seconds In Year ["\cf0  \cf5 <<\cf0  Year \cf5 <<\cf0  \cf3 "] is "\cf0  \cf5 <<\cf0  NumberOfSecondsInYear(Year) \cf5 <<\cf0  endl;\
+\
+\
+\
+	\cf4 return\cf0  0;\
+\}}

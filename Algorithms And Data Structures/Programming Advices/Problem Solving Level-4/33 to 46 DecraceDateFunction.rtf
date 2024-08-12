@@ -1,0 +1,339 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red202\green202\blue202;\red23\green23\blue23;\red191\green109\blue186;
+\red192\green125\blue86;\red58\green143\blue232;\red65\green192\blue160;\red224\green226\blue154;\red132\green210\blue252;
+\red166\green196\blue152;\red88\green137\blue68;\red205\green173\blue106;}
+{\*\expandedcolortbl;;\csgenericrgb\c79216\c79216\c79216;\csgenericrgb\c9020\c9020\c9020;\csgenericrgb\c74902\c42745\c72941;
+\csgenericrgb\c75294\c49020\c33725;\csgenericrgb\c22745\c56078\c90980;\csgenericrgb\c25490\c75294\c62745;\csgenericrgb\c87843\c88627\c60392;\csgenericrgb\c51765\c82353\c98824;
+\csgenericrgb\c65098\c76863\c59608;\csgenericrgb\c34510\c53725\c26667;\csgenericrgb\c80392\c67843\c41569;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf2 \cb3 \
+
+\f1 \cf4 #include \cf5 <iostream>\
+\cf4 using \cf6 namespace \cf7 std\cf2 ;\
+\
+\
+\cf6 struct \cf7 stDate \cf2 \{\
+\
+	\cf6 short Year\cf2 ;\
+	\cf6 short Month\cf2 ;\
+	\cf6 short Day\cf2 ;\
+\
+\};\
+\
+\cf6 short \cf8 ReadYear\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Year \cf2 = \cf10 0\cf2 ;\
+	\cf9 cout \cf8 << \cf5 "Enter a Year To Check : "\cf2 ;\
+	\cf9 cin \cf8 >> \cf9 Year\cf2 ;\
+	\cf4 return \cf9 Year\cf2 ;\
+\
+\}\
+\cf6 short \cf8 ReadMonth\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Month \cf2 = \cf10 0\cf2 ;\
+\
+	\cf4 do \cf2 \{\
+		\cf9 cout \cf8 << \cf5 "Enter Month To Check : "\cf2 ;\
+		\cf9 cin \cf8 >> \cf9 Month\cf2 ;\
+	\} \cf4 while \cf2 (\cf9 Month \cf2 > \cf10 12 \cf2 || \cf9 Month \cf2 < \cf10 1\cf2 );\
+\
+	\cf4 return \cf9 Month\cf2 ;\
+\}\
+\cf6 short \cf8 ReadDay\cf2 ()\
+\{\
+\
+	\cf6 short \cf9 Day \cf2 = \cf10 0\cf2 ;\
+\
+	\cf4 do \cf2 \{\
+		\cf9 cout \cf8 << \cf5 "Enter Day To Check : "\cf2 ;\
+		\cf9 cin \cf8 >> \cf9 Day\cf2 ;\
+	\} \cf4 while \cf2 (\cf9 Day \cf2 > \cf10 31 \cf2 || \cf9 Day \cf2 < \cf10 1\cf2 );\
+\
+	\cf4 return \cf9 Day\cf2 ;\
+\}\
+\
+\cf7 stDate \cf8 ReadFullDate\cf2 ()\
+\{\
+    \cf7 stDate \cf9 Date \cf2 ;\
+    \cf9 Date\cf2 .\cf6 Day \cf2 = \cf8 ReadDay\cf2 () ;\
+    \cf9 Date\cf2 .\cf6 Month \cf2 = \cf8 ReadMonth\cf2 () ;\
+    \cf9 Date\cf2 .\cf6 Year \cf2 = \cf8 ReadYear\cf2 () ;\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf6 bool \cf8 IsLeapYear\cf2 (\cf6 short \cf9 Year\cf2 )\
+\{\
+\
+	\cf4 return \cf2 (\cf9 Year \cf2 % \cf10 400 \cf2 == \cf10 0\cf2 ) || (\cf9 Year \cf2 % \cf10 100 \cf2 != \cf10 0\cf2 ) && (\cf9 Year \cf2 % \cf10 4 \cf2 == \cf10 0\cf2 ) ? \cf6 true \cf2 : \cf6 false\cf2 ;\
+\
+\}\
+\cf6 short \cf8 NumberOfDaysInMonth\cf2 (\cf6 short \cf9 Month \cf2 , \cf6 short \cf9 Year\cf2 )\
+\{\
+\
+    \cf4 if\cf2 (\cf9 Month \cf2 > \cf10 12 \cf2 || \cf9 Month \cf2 <\cf10 1\cf2 )\
+    \cf4 return \cf10 0\cf2 ;\
+\
+	\cf6 short \cf9 Days\cf2 [\cf10 12\cf2 ] = \{ \cf10 31 \cf2 , \cf10 28 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 , \cf10 30 \cf2 , \cf10 31 \cf2 \};\
+\
+	\cf4 return \cf2 (\cf9 Month \cf2 == \cf10 2\cf2 ) ? (\cf8 IsLeapYear\cf2 (\cf9 Year\cf2 ) ? \cf10 29 \cf2 : \cf10 28\cf2 ) : \cf9 Days\cf2 [\cf9 Month \cf2 - \cf10 1\cf2 ];\
+\}\
+\
+\cf6 bool \cf8 IsLastDayInMonth\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf4 return \cf2 (\cf9 Date\cf2 .\cf6 Day \cf2 == \cf8 NumberOfDaysInMonth\cf2 (\cf9 Date\cf2 .\cf6 Month\cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 ));\
+\
+\}\
+\
+\cf6 bool \cf8 IsLastMonthInYear\cf2 (\cf6 short \cf9 Month\cf2 )\
+\{\
+    \cf4 return \cf2 (\cf9 Month \cf2 == \cf10 12\cf2 );\
+\}\
+\
+\
+\
+\cf11 // 1 day\
+\cf7 stDate \cf8 DecreaseDateByOneDay\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf4 if\cf2 (\cf9 Date\cf2 .\cf6 Day \cf2 == \cf10 1\cf2 ) \{\
+        \cf4 if \cf2 (\cf9 Date\cf2 .\cf6 Month \cf2 == \cf10 1\cf2 ) \{\
+            \cf9 Date\cf2 .\cf6 Month \cf2 = \cf10 12\cf2 ;\
+            \cf9 Date\cf2 .\cf6 Day \cf2 = \cf10 31\cf2 ;\
+            \cf9 Date\cf2 .\cf6 Year\cf2 --;\
+        \} \cf4 else\
+        \cf2 \{\
+            \cf9 Date\cf2 .\cf6 Month\cf2 --;\
+            \cf9 Date\cf2 .\cf6 Day \cf2 = \cf8 NumberOfDaysInMonth\cf2 (\cf9 Date\cf2 .\cf6 Month \cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 );\
+        \}\
+    \}\
+    \cf4 else\
+    \cf2 \{\
+        \cf9 Date\cf2 .\cf6 Day\cf2 --;\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // x days\
+\cf7 stDate \cf8 DecreaseDateByMoreDays\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessDays\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 short \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i \cf2 <= \cf9 LessDays \cf2 ; \cf9 i\cf2 ++)\
+    \{\
+        \cf9 Date \cf2 = \cf8 DecreaseDateByOneDay\cf2 (\cf9 Date\cf2 );\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf11 // 1 week\
+\cf7 stDate \cf8 DecreaseDateByOneWeek\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 short \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i\cf2 <= \cf10 7 \cf2 ;\cf9 i\cf2 ++)\
+    \{\
+        \cf9 Date \cf2 = \cf8 DecreaseDateByOneDay\cf2 (\cf9 Date\cf2 );\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // x weeks\
+\cf7 stDate \cf8 DecreaseDateByMoreWeeks\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessWeeks\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 short \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i \cf2 <= \cf9 LessWeeks \cf2 ; \cf9 i\cf2 ++)\
+    \{\
+        \cf9 Date \cf2 = \cf8 DecreaseDateByOneWeek\cf2 (\cf9 Date\cf2 );\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf11 // 1 month\
+\cf7 stDate \cf8 DecreaseDateByOneMonth\cf2 (\cf7 stDate \cf9 Date \cf2 )\
+\{\
+\
+    \cf4 if\cf2 (\cf9 Date\cf2 .\cf6 Month \cf2 == \cf10 1\cf2 )\
+    \{\
+        \cf9 Date\cf2 .\cf6 Month \cf2 = \cf10 12\cf2 ;\
+        \cf9 Date\cf2 .\cf6 Year\cf2 --;\
+    \}\
+\cf4 else\
+    \cf9 Date\cf2 .\cf6 Month\cf2 --;\
+\
+\
+\
+    \cf6 short \cf9 NumberOfDateInCurrentMonth \cf2 = \cf8 NumberOfDaysInMonth\cf2 (\cf9 Date\cf2 .\cf6 Month \cf2 , \cf9 Date\cf2 .\cf6 Year\cf2 );\
+\
+    \cf4 if\cf2 (\cf9 Date\cf2 .\cf6 Day \cf2 > \cf9 NumberOfDateInCurrentMonth\cf2 )\
+    \{\
+        \cf9 Date\cf2 .\cf6 Day \cf2 = \cf9 NumberOfDateInCurrentMonth \cf2 ;\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf11 // x months\
+\cf7 stDate \cf8 DecreaseDateByMoreMonths\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessMonths\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 short \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i \cf2 <= \cf9 LessMonths \cf2 ; \cf9 i\cf2 ++)\
+    \{\
+        \cf9 Date \cf2 = \cf8 DecreaseDateByOneMonth\cf2 (\cf9 Date\cf2 );\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\
+\cf11 // 1 year\
+\cf7 stDate \cf8 DecreaseDateByOneYear\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+\
+    \cf9 Date\cf2 .\cf6 Year\cf2 --;\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // 10 years\
+\cf7 stDate \cf8 DecreaseDateByMoreYears\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessYears\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 int \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i \cf2 <= \cf9 LessYears \cf2 ; \cf9 i\cf2 ++)\
+    \{\
+            \cf9 Date \cf2 = \cf8 DecreaseDateByOneYear\cf2 (\cf9 Date\cf2 );\
+    \}\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // 10 years faster\
+\cf7 stDate \cf8 DecreaseDateByMoreYearsFaster\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessYears\cf2 ) \{\
+\
+     \cf9 Date\cf2 .\cf6 Year \cf2 -= \cf9 LessYears\cf2 ;\
+     \cf4 return \cf9 Date\cf2 ;\
+\
+\}\
+\
+\
+\cf11 // 1 Decade\
+\cf7 stDate \cf8 DecreaseDateByOneDecade\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+    \cf9 Date\cf2 .\cf6 Year \cf2 -= \cf10 10\cf2 ;\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // 10 Decade\
+\cf7 stDate \cf8 DecreaseDateByMoreDecade\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessDecades\cf2 )\
+\{\
+\
+    \cf4 for\cf2 (\cf6 int \cf9 i \cf2 = \cf10 1 \cf2 ; \cf9 i \cf2 <= \cf9 LessDecades \cf2 * \cf10 10 \cf2 ; \cf9 i\cf2 ++)\
+    \{\
+            \cf9 Date \cf2 = \cf8 DecreaseDateByOneYear\cf2 (\cf9 Date\cf2 );\
+    \}\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\cf11 // 10 Decade faster\
+\cf7 stDate \cf8 DecreaseDateByMoreDecadeFaster\cf2 (\cf7 stDate \cf9 Date \cf2 , \cf6 short \cf9 LessDecades\cf2 )\
+\{\
+\
+    \cf9 Date\cf2 .\cf6 Year \cf2 -= \cf9 LessDecades\cf2 *\cf10 10 \cf2 ;\
+\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\
+\cf11 // 1 Century\
+\cf7 stDate \cf8 DecreaseDateByOneCentury\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+    \cf9 Date\cf2 .\cf6 Year \cf2 -= \cf10 100\cf2 ;\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\cf11 // 1 Millennium\
+\cf7 stDate \cf8 DecreaseDateByOneMillennium\cf2 (\cf7 stDate \cf9 Date\cf2 )\
+\{\
+    \cf9 Date\cf2 .\cf6 Year \cf2 -= \cf10 1000\cf2 ;\
+    \cf4 return \cf9 Date\cf2 ;\
+\}\
+\
+\
+\
+\
+\
+\
+\
+\cf6 int \cf8 main \cf2 ()\
+\{\
+\
+    \cf7 stDate \cf9 Date1 \cf2 = \cf8 ReadFullDate\cf2 ();\
+\
+    \cf9 cout \cf8 << \cf5 "\cf12 \\n\\n\cf5 Date After: \cf12 \\n\\n\cf5 "\cf2 ;\
+\
+\
+    \cf11 // 1 day\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneDay\cf2 (\cf9 Date1\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Day ---------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 days\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreDays\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Day --------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 1 week\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneWeek\cf2 (\cf9 Date1\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Week --------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 weeks\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreWeeks\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Week -------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 1 month\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneMonth\cf2 (\cf9 Date1\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Month -------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 5 months\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreMonths\cf2 (\cf9 Date1 \cf2 , \cf10 5\cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 5 Months ------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+\
+    \cf11 // 1 year\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneYear\cf2 (\cf9 Date1 \cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Year --------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 Years\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreYears\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Years ------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 Years faster\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreYearsFaster\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Years Faster -----------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+\
+    \cf11 // 1 Decade\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneDecade\cf2 (\cf9 Date1 \cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Decade ------------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 Decade\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreDecade\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Decades ----------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 10 Decade faster\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByMoreDecadeFaster\cf2 (\cf9 Date1 \cf2 , \cf10 10\cf2 );\
+    \cf9 cout \cf8 << \cf5 "Subtruction 10 Decades Faster ---------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 1 Century\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneCentury\cf2 (\cf9 Date1 \cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Century -----------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+    \cf11 // 1 Millennium\
+    \cf9 Date1 \cf2 = \cf8 DecreaseDateByOneMillennium\cf2 (\cf9 Date1 \cf2 ) ;\
+    \cf9 cout \cf8 << \cf5 "Subtruction 1 Millennium --------------> " \cf8 << \cf9 Date1\cf2 .\cf6 Day \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Month \cf8 << \cf5 " / " \cf8 << \cf9 Date1\cf2 .\cf6 Year \cf8 << endl\cf2 ;\
+\
+\
+    \cf4 return \cf10 0\cf2 ;\
+\}\
+\
+}
