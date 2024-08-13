@@ -1,0 +1,86 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 "clsUsers.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsScreen.h"\cf0 ;\
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\cf4 class\cf0  \cf5 clsListUsersScreen\cf0  : \cf4 protected\cf0  \cf5 clsScreen\cf0 \
+\{\
+\
+\cf4 private\cf0 :\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _PrintUserRecordLine(\cf5 clsUser\cf0  \cf2 User\cf0 )\
+	\{\
+		cout \cf6 <<\cf0  setw(8) \cf6 <<\cf0  left \cf6 <<\cf0  \cf3 ""\cf0  \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(12) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .UserName;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(20) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .FullName();\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(12) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .Phone;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(20) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .Email;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(10) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .Password;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(12) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 User\cf0 .Permissions;\
+\
+	\}\
+\
+\
+\cf4 public\cf0  :\
+\
+	\cf4 static\cf0  \cf4 void\cf0  ShowUserList()\
+	\{\
+		\cf5 vector\cf0 <\cf5 clsUser\cf0 >vUsers = \cf5 clsUser\cf0 ::GetUsersList();\
+\
+		\cf5 string\cf0  Title = \cf3 "User List Screen"\cf0 ;\
+		\cf5 string\cf0  SubTitle = \cf3 "("\cf0  \cf6 +\cf0  to_string(vUsers.size()) \cf6 +\cf0  \cf3 ") User(s)."\cf0 ;\
+\
+		_DrawScreenHeader(Title, SubTitle);\
+\
+		cout \cf6 <<\cf0  setw(8) \cf6 <<\cf0  left \cf6 <<\cf0  \cf3 ""\cf0  \cf6 <<\cf0  \cf3 "\\n\\t_______________________________________________________"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "______________________________________________\\n"\cf0  \cf6 <<\cf0  endl;\
+\
+		cout \cf6 <<\cf0  setw(8) \cf6 <<\cf0  left \cf6 <<\cf0  \cf3 ""\cf0  \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(12) \cf6 <<\cf0  \cf3 "UserName"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(25) \cf6 <<\cf0  \cf3 "Full Name"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(12) \cf6 <<\cf0  \cf3 "Phone"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(20) \cf6 <<\cf0  \cf3 "Email"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(10) \cf6 <<\cf0  \cf3 "Password"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(12) \cf6 <<\cf0  \cf3 "Permissions"\cf0 ;\
+\
+		cout \cf6 <<\cf0  setw(8) \cf6 <<\cf0  left \cf6 <<\cf0  \cf3 ""\cf0  \cf6 <<\cf0  \cf3 "\\n\\t_______________________________________________________"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "______________________________________________\\n"\cf0  \cf6 <<\cf0  endl;\
+\
+\
+\
+		\cf4 if\cf0  (vUsers.size() == 0)\
+		\{\
+			cout \cf6 <<\cf0  \cf3 "\\t\\t\\t\\t\\tNo Users Available In the System!"\cf0 ;\
+		\}\
+		\cf4 else\cf0 \
+		\{\
+\
+			\cf4 for\cf0  (\cf5 clsUser\cf0  User : vUsers)\
+			\{\
+\
+				_PrintUserRecordLine(User);\
+				cout \cf6 <<\cf0  endl;\
+			\}\
+\
+\
+		\}\
+\
+		cout \cf6 <<\cf0  setw(8) \cf6 <<\cf0  left \cf6 <<\cf0  \cf3 ""\cf0  \cf6 <<\cf0  \cf3 "\\n\\t_______________________________________________________"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "______________________________________________\\n"\cf0  \cf6 <<\cf0  endl;\
+	\}\
+\
+\
+\
+\};\
+\
+}

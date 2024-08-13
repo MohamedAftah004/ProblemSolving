@@ -1,0 +1,407 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red47\green79\blue79;\red0\green128\blue128;\red0\green128\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c18431\c30980\c30980;\csgenericrgb\c0\c50196\c50196;\csgenericrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 <string>\cf0 \
+\cf2 #include\cf0  \cf3 "clsPerson.h"\cf0 \
+\cf2 #include\cf0  \cf3 "clsString.h"\cf0 \
+\cf2 #include\cf0  \cf3 <vector>\cf0 \
+\cf2 #include\cf0  \cf3 <fstream>\cf0 \
+\cf2 #include\cf0  \cf3 <iomanip>\cf0 \
+\cf2 #include\cf0  \cf3 "clsUtility.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsInputValidate.h"\cf0 \
+\
+\
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\cf4 class\cf0  \cf5 clsBankClient\cf0  : \cf4 public\cf0  \cf5 clsPerson\cf0 \
+\{\
+\cf4 private\cf0 :\
+\
+    \cf4 enum\cf0  \cf5 enMode\cf0  \{ \cf6 EmptyMode\cf0  = 0, \cf6 UpdateMode\cf0  = 1, \cf6 AddNewMode\cf0  = 2 \};\
+    \cf5 enMode\cf0  _Mode;\
+\
+\
+    \cf5 string\cf0  _AccountNumber;\
+    \cf5 string\cf0  _PinCode;\
+    \cf4 float\cf0  _AccountBalance;\
+    \cf4 bool\cf0  _MarkedForDelete = \cf4 false\cf0 ;\
+\
+\
+\
+    \cf4 static\cf0  \cf5 clsBankClient\cf0  _ConvertLinetoClientObject(\cf5 string\cf0  \cf2 Line\cf0 , \cf5 string\cf0  \cf2 Seperator\cf0  = \cf3 "#//#"\cf0 )\
+    \{\
+        \cf5 vector\cf0 <\cf5 string\cf0 > vClientData;\
+        vClientData \cf7 =\cf0  \cf5 clsString\cf0 ::Split(\cf2 Line\cf0 , \cf2 Seperator\cf0 );\
+\
+        \cf4 return\cf0  \cf5 clsBankClient\cf0 (\cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 , vClientData\cf7 [\cf0 0\cf7 ]\cf0 , vClientData\cf7 [\cf0 1\cf7 ]\cf0 , vClientData\cf7 [\cf0 2\cf7 ]\cf0 ,\
+            vClientData\cf7 [\cf0 3\cf7 ]\cf0 , vClientData\cf7 [\cf0 4\cf7 ]\cf0 , vClientData\cf7 [\cf0 5\cf7 ]\cf0 , stod(vClientData\cf7 [\cf0 6\cf7 ]\cf0 ));\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 string\cf0  _ConverClientObjectToLine(\cf5 clsBankClient\cf0  \cf2 Client\cf0 , \cf5 string\cf0  \cf2 Seperator\cf0  = \cf3 "#//#"\cf0 )\
+    \{\
+\
+        \cf5 string\cf0  stClientRecord = \cf3 ""\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .FirstName \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .LastName \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .Email \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .Phone \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .AccountNumber() \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  \cf2 Client\cf0 .PinCode \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        stClientRecord \cf7 +=\cf0  to_string(\cf2 Client\cf0 .AccountBalance);\
+\
+        \cf4 return\cf0  stClientRecord;\
+\
+    \}\
+\
+    \cf4 static\cf0   \cf5 vector\cf0  <\cf5 clsBankClient\cf0 > _LoadClientsDataFromFile()\
+    \{\
+\
+        \cf5 vector\cf0  <\cf5 clsBankClient\cf0 > vClients;\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Clients.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            \cf5 string\cf0  Line;\
+\
+\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+\
+                \cf5 clsBankClient\cf0  Client = _ConvertLinetoClientObject(Line);\
+\
+                vClients.push_back(Client);\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+        \cf4 return\cf0  vClients;\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf4 void\cf0  _SaveCleintsDataToFile(\cf5 vector\cf0  <\cf5 clsBankClient\cf0 > \cf2 vClients\cf0 )\
+    \{\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Clients.txt"\cf0 , \cf5 ios\cf0 ::out);\cf8 //overwrite\cf0 \
+\
+        \cf5 string\cf0  DataLine;\
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            \cf4 for\cf0  (\cf5 clsBankClient\cf0  C : \cf2 vClients\cf0 )\
+            \{\
+                \cf4 if\cf0  (C.MarkedForDeleted() == \cf4 false\cf0 )\
+                \{\
+                    \cf8 //we only write records that are not marked for delete.  \cf0 \
+                    DataLine \cf7 =\cf0  _ConverClientObjectToLine(C);\
+                    MyFile \cf7 <<\cf0  DataLine \cf7 <<\cf0  endl;\
+\
+                \}\
+\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+    \}\
+\
+    \cf4 void\cf0  _Update()\
+    \{\
+        \cf5 vector\cf0  <\cf5 clsBankClient\cf0 > _vClients;\
+        _vClients \cf7 =\cf0  _LoadClientsDataFromFile();\
+\
+        \cf4 for\cf0  (\cf5 clsBankClient\cf0 & C : _vClients)\
+        \{\
+            \cf4 if\cf0  (C.AccountNumber() \cf7 ==\cf0  AccountNumber())\
+            \{\
+                C \cf7 =\cf0  *\cf4 this\cf0 ;\
+                \cf4 break\cf0 ;\
+            \}\
+\
+        \}\
+\
+        _SaveCleintsDataToFile(_vClients);\
+\
+    \}\
+\
+    \cf4 void\cf0  _AddNew()\
+    \{\
+\
+        _AddDataLineToFile(_ConverClientObjectToLine(*\cf4 this\cf0 ));\
+    \}\
+\
+    \cf4 void\cf0  _AddDataLineToFile(\cf5 string\cf0   \cf2 stDataLine\cf0 )\
+    \{\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Clients.txt"\cf0 , \cf5 ios\cf0 ::out | \cf5 ios\cf0 ::app);\
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            MyFile \cf7 <<\cf0  \cf2 stDataLine\cf0  \cf7 <<\cf0  endl;\
+\
+            MyFile.close();\
+        \}\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsBankClient\cf0  _GetEmptyClientObject()\
+    \{\
+        \cf4 return\cf0  \cf5 clsBankClient\cf0 (\cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , 0);\
+    \}\
+\
+\cf4 public\cf0 :\
+\
+\
+    clsBankClient(\cf5 enMode\cf0  \cf2 Mode\cf0 , \cf5 string\cf0  \cf2 FirstName\cf0 , \cf5 string\cf0  \cf2 LastName\cf0 ,\
+        \cf5 string\cf0  \cf2 Email\cf0 , \cf5 string\cf0  \cf2 Phone\cf0 , \cf5 string\cf0  \cf2 AccountNumber\cf0 , \cf5 string\cf0  \cf2 PinCode\cf0 ,\
+        \cf4 float\cf0  \cf2 AccountBalance\cf0 ) :\
+        \cf5 clsPerson\cf0 (\cf2 FirstName\cf0 , \cf2 LastName\cf0 , \cf2 Email\cf0 , \cf2 Phone\cf0 )\
+\
+    \{\
+        _Mode = \cf2 Mode\cf0 ;\
+        _AccountNumber \cf7 =\cf0  \cf2 AccountNumber\cf0 ;\
+        _PinCode \cf7 =\cf0  \cf2 PinCode\cf0 ;\
+        _AccountBalance = \cf2 AccountBalance\cf0 ;\
+\
+    \}\
+\
+    \cf4 bool\cf0  IsEmpty()\
+    \{\
+        \cf4 return\cf0  (_Mode == \cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 );\
+    \}\
+\
+    \cf4 bool\cf0  MarkedForDeleted()\
+    \{\
+        \cf4 return\cf0  _MarkedForDelete;\
+    \}\
+\
+    \cf5 string\cf0  AccountNumber()\
+    \{\
+        \cf4 return\cf0  _AccountNumber;\
+    \}\
+\
+    \cf4 void\cf0  SetPinCode(\cf5 string\cf0  \cf2 PinCode\cf0 )\
+    \{\
+        _PinCode \cf7 =\cf0  \cf2 PinCode\cf0 ;\
+    \}\
+\
+    \cf5 string\cf0  GetPinCode()\
+    \{\
+        \cf4 return\cf0  _PinCode;\
+    \}\
+    \cf4 __declspec\cf0 (\cf4 property\cf0 (get = GetPinCode, put = SetPinCode)) \cf5 string\cf0  PinCode;\
+\
+    \cf4 void\cf0  SetAccountBalance(\cf4 float\cf0  \cf2 AccountBalance\cf0 )\
+    \{\
+        _AccountBalance = \cf2 AccountBalance\cf0 ;\
+    \}\
+\
+    \cf4 float\cf0  GetAccountBalance()\
+    \{\
+        \cf4 return\cf0  _AccountBalance;\
+    \}\
+    \cf4 __declspec\cf0 (\cf4 property\cf0 (get = GetAccountBalance, put = SetAccountBalance)) \cf4 float\cf0  AccountBalance;\
+\
+    \cf4 void\cf0  Print()\
+    \{\
+        cout \cf7 <<\cf0  \cf3 "\\nClient Card:"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "\\n___________________"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "\\nFirstName   : "\cf0  \cf7 <<\cf0  FirstName;\
+        cout \cf7 <<\cf0  \cf3 "\\nLastName    : "\cf0  \cf7 <<\cf0  LastName;\
+        cout \cf7 <<\cf0  \cf3 "\\nFull Name   : "\cf0  \cf7 <<\cf0  FullName();\
+        cout \cf7 <<\cf0  \cf3 "\\nEmail       : "\cf0  \cf7 <<\cf0  Email;\
+        cout \cf7 <<\cf0  \cf3 "\\nPhone       : "\cf0  \cf7 <<\cf0  Phone;\
+        cout \cf7 <<\cf0  \cf3 "\\nAcc. Number : "\cf0  \cf7 <<\cf0  _AccountNumber;\
+        cout \cf7 <<\cf0  \cf3 "\\nPassword    : "\cf0  \cf7 <<\cf0  _PinCode;\
+        cout \cf7 <<\cf0  \cf3 "\\nBalance     : "\cf0  \cf7 <<\cf0  _AccountBalance;\
+        cout \cf7 <<\cf0  \cf3 "\\n___________________\\n"\cf0 ;\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsBankClient\cf0  Find(\cf5 string\cf0  \cf2 AccountNumber\cf0 )\
+    \{\
+\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Clients.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+            \cf5 string\cf0  Line;\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+                \cf5 clsBankClient\cf0  Client = _ConvertLinetoClientObject(Line);\
+                \cf4 if\cf0  (Client.AccountNumber() \cf7 ==\cf0  \cf2 AccountNumber\cf0 )\
+                \{\
+                    MyFile.close();\
+                    \cf4 return\cf0  Client;\
+                \}\
+\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+        \cf4 return\cf0  _GetEmptyClientObject();\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsBankClient\cf0  Find(\cf5 string\cf0  \cf2 AccountNumber\cf0 , \cf5 string\cf0  \cf2 PinCode\cf0 )\
+    \{\
+\
+\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Clients.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+            \cf5 string\cf0  Line;\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+                \cf5 clsBankClient\cf0  Client = _ConvertLinetoClientObject(Line);\
+                \cf4 if\cf0  (Client.AccountNumber() \cf7 ==\cf0  \cf2 AccountNumber\cf0  && Client.PinCode \cf7 ==\cf0  \cf2 PinCode\cf0 )\
+                \{\
+                    MyFile.close();\
+                    \cf4 return\cf0  Client;\
+                \}\
+\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+        \cf4 return\cf0  _GetEmptyClientObject();\
+    \}\
+\
+    \cf4 enum\cf0  \cf5 enSaveResults\cf0  \{ \cf6 svFaildEmptyObject\cf0  = 0, \cf6 svSucceeded\cf0  = 1, \cf6 svFaildAccountNumberExists\cf0  = 2 \};\
+    \cf5 enSaveResults\cf0  Save()\
+    \{\
+\
+        \cf4 switch\cf0  (_Mode)\
+        \{\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 :\
+        \{\
+            \cf4 if\cf0  (IsEmpty())\
+            \{\
+\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svFaildEmptyObject\cf0 ;\
+\
+            \}\
+\
+        \}\
+\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 :\
+        \{\
+\
+\
+            _Update();\
+\
+            \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svSucceeded\cf0 ;\
+\
+            \cf4 break\cf0 ;\
+        \}\
+\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 AddNewMode\cf0 :\
+        \{\
+            \cf8 //This will add new record to file or database\cf0 \
+            \cf4 if\cf0  (\cf5 clsBankClient\cf0 ::IsClientExist(_AccountNumber))\
+            \{\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svFaildAccountNumberExists\cf0 ;\
+            \}\
+            \cf4 else\cf0 \
+            \{\
+                _AddNew();\
+\
+                \cf8 //We need to set the mode to update after add new\cf0 \
+                _Mode = \cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 ;\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svSucceeded\cf0 ;\
+            \}\
+\
+            \cf4 break\cf0 ;\
+        \}\
+        \}\
+\
+\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf4 bool\cf0  IsClientExist(\cf5 string\cf0  \cf2 AccountNumber\cf0 )\
+    \{\
+\
+        \cf5 clsBankClient\cf0  Client1 = \cf5 clsBankClient\cf0 ::Find(\cf2 AccountNumber\cf0 );\
+        \cf4 return\cf0  (!Client1.IsEmpty());\
+    \}\
+\
+    \cf4 bool\cf0  Delete()\
+    \{\
+        \cf5 vector\cf0  <\cf5 clsBankClient\cf0 > _vClients;\
+        _vClients \cf7 =\cf0  _LoadClientsDataFromFile();\
+\
+        \cf4 for\cf0  (\cf5 clsBankClient\cf0 & C : _vClients)\
+        \{\
+            \cf4 if\cf0  (C.AccountNumber() \cf7 ==\cf0  _AccountNumber)\
+            \{\
+                C._MarkedForDelete = \cf4 true\cf0 ;\
+                \cf4 break\cf0 ;\
+            \}\
+\
+        \}\
+\
+        _SaveCleintsDataToFile(_vClients);\
+\
+        *\cf4 this\cf0  \cf7 =\cf0  _GetEmptyClientObject();\
+\
+        \cf4 return\cf0  \cf4 true\cf0 ;\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsBankClient\cf0  GetAddNewClientObject(\cf5 string\cf0  \cf2 AccountNumber\cf0 )\
+    \{\
+        \cf4 return\cf0  \cf5 clsBankClient\cf0 (\cf5 enMode\cf0 ::\cf6 AddNewMode\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf2 AccountNumber\cf0 , \cf3 ""\cf0 , 0);\
+    \}\
+\
+\
+    \cf4 static\cf0  \cf5 vector\cf0 <\cf5 clsBankClient\cf0 >GetClientsList()\
+    \{\
+        \cf4 return\cf0  _LoadClientsDataFromFile();\
+    \}\
+\
+   \cf4 static\cf0  \cf4 double\cf0  CalculateTotalBalances()\
+    \{\
+\
+        \cf5 vector\cf0 <\cf5 clsBankClient\cf0 >vClients = GetClientsList();\
+\
+        \cf4 double\cf0  TotalBalances = 0;\
+\
+        \cf4 for\cf0  (\cf5 clsBankClient\cf0  C : vClients)\
+        \{\
+            TotalBalances += C.AccountBalance;\
+        \}\
+        \
+        \cf4 return\cf0  TotalBalances;\
+\
+    \}\
+\
+\
+\
+\};\
+\
+}

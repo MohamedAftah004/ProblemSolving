@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\csgray\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb3 #include <iostream>\
+#include "clsPerson.h"\
+#include "clsBankClient.h"\
+#include "clsInputValidate.h"\
+\
+void PrintClientRecordLine(clsBankClient Client)\
+\{\
+\
+    cout << "|" << setw(15) << left << Client.AccountNumber();\
+    cout << "|" << setw(20) << left << Client.FullName();\
+    cout << "|" << setw(12) << left << Client.Phone;\
+    cout << "|" << setw(20) << left << Client.Email;\
+    cout << "|" << setw(10) << left << Client.PinCode;\
+    cout << "|" << setw(12) << left << Client.AccountBalance;\
+\
+\
+\}\
+\
+void ShowClientsList()\
+\{\
+\
+    vector<clsBankClient>vClients = clsBankClient::GetClientsList();\
+\
+    cout << "\\n\\t\\t\\t\\t|   Client List (" << vClients.size() << ") Client.   |\\n\\t\\t\\t\\t_______________________________\\n\\t\\t\\t ______________________________\\n";\
+    cout << "\\t\\t\\t\\t\\t_______________________________";\
+\
+    cout << "\\n__________________________________________________________________________________________________\\n";\
+    cout << "|" << left << setw(15)  << "Account Number";\
+    cout << "|" << left << setw(20) << "Client Name";\
+    cout << "|" << left << setw(12) << "Phone";\
+    cout << "|" << left << setw(20) << "Email";\
+    cout << "|" << left << setw(10) << "PinCode";\
+    cout << "|" << left << setw(12) << "Balance";\
+    cout << "\\n__________________________________________________________________________________________________\\n";\
+\
+    for (clsBankClient C : vClients)\
+    \{\
+\
+        PrintClientRecordLine(C) ;\
+        cout << endl;\
+    \}\
+    cout << "__________________________________________________________________________________________________\\n";\
+\
+\
+\
+\}\
+\
+int main()\
+\
+\{\
+\
+    ShowClientsList();\
+\
+    system("pause>0");\
+    return 0;\
+\}}

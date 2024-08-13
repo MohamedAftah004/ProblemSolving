@@ -1,0 +1,80 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red0\green128\blue0;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c0;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 "clsScreen.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsBankClient.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 <vector>\cf0 \
+\
+\cf4 class\cf0  \cf5 clsTransferLogScreen\cf0  : \cf4 protected\cf0  \cf5 clsScreen\cf0 \
+\{\
+\
+	\cf6 //_ConvertDataLineToTransferRecord\cf0 \
+\
+\cf4 private\cf0 :\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _PrintTransferDateLine(\cf5 clsBankClient\cf0 ::\cf5 stTransferLog\cf0  \cf2 TransferLog\cf0 )\
+	\{\
+\
+            cout \cf7 <<\cf0  \cf3 "\\t| "\cf0  \cf7 <<\cf0  setw(25) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .Date;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(8) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .SourceAccountNumber;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(8) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .DestinationAccountNumber;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(12) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .Amount;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(12) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .SourceAccountBalance;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(12) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .DestinationAccountBalance;\
+            cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  setw(10) \cf7 <<\cf0  left \cf7 <<\cf0  \cf2 TransferLog\cf0 .UserName;\
+\
+	\}\
+\
+\cf4 public\cf0 :\
+\
+\
+    \cf4 static\cf0  \cf4 void\cf0  ShowTransferLogListScreen()\
+    \{\
+\
+\
+        \cf5 vector\cf0 <\cf5 clsBankClient\cf0 ::\cf5 stTransferLog\cf0 >vTransferLogs = \cf5 clsBankClient\cf0 ::GetListTransferLog();\
+\
+        \cf5 string\cf0  Title = \cf3 "Transfer Log List Screen"\cf0 ;\
+        \cf5 string\cf0  SubTitle = \cf3 "("\cf0  \cf7 +\cf0  to_string(vTransferLogs.size()) \cf7 +\cf0  \cf3 ") Record(s)."\cf0 ;\
+            _DrawScreenHeader(Title,SubTitle);\
+\
+\
+        \cf6 //vector<clsBankClient::stTransferLog>vTransferLogs = clsBankClient::GetListTransferLog;\cf0 \
+\
+        \cf6 //_vGetListTransferLog\cf0 \
+\
+        cout \cf7 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n\\n"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "\\t| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(25) \cf7 <<\cf0  \cf3 "Date / Time"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(8) \cf7 <<\cf0  \cf3 "s.Acct"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(8) \cf7 <<\cf0  \cf3 "d.Acct"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(12) \cf7 <<\cf0  \cf3 "Amount"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(12) \cf7 <<\cf0  \cf3 "s.Balance"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(12) \cf7 <<\cf0  \cf3 "d.Balance"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "| "\cf0  \cf7 <<\cf0  left \cf7 <<\cf0  setw(10) \cf7 <<\cf0  \cf3 "User"\cf0 ;\
+        cout \cf7 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n\\n"\cf0 ;\
+\
+        \cf4 for\cf0  (\cf5 clsBankClient\cf0 ::\cf5 stTransferLog\cf0  T : vTransferLogs)\
+        \{\
+\
+            _PrintTransferDateLine(T);\
+            cout \cf7 <<\cf0  endl;\
+        \}\
+\
+        cout \cf7 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n"\cf0 ;\
+\
+\
+\
+    \}\
+\
+\
+\};\
+\
+}
