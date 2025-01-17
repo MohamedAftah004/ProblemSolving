@@ -1,0 +1,78 @@
+a#include <iostream>
+using namespace std;
+
+short ReadYear()
+{
+	cout << "Enter Year To Check : ";
+	short Year;
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	cout << "Enter Month To Check : ";
+	short Month;
+	cin >> Month;
+	return Month;
+}
+short ReadDays()
+{
+	cout << "Enter Day To Check : ";
+	short Day;
+	cin >> Day;
+	return Day;
+}
+
+bool IsLeapYear(short Year) {
+
+	return ((Year % 400 == 0) || (Year % 100 != 0) && (Year % 4 == 0)) ? true : false;
+
+}
+
+// Calculate days in month
+short NumberOfDaysInMonth(short Month, short Year)
+{
+
+	if (Month > 12 || Month < 1)
+		return 0;
+
+	int Days[12]{ 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+	return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : Days[Month - 1];
+
+}
+
+
+
+// Calculate Total Days From Beginning of year
+short NumberOfDaysFromBeginingOfTheYear(short Day, short Month, short Year)
+{
+
+	short TotalDays = 0; 
+	for (short i = 1; i <= Month - 1; i++)
+	{
+		TotalDays += NumberOfDaysInMonth(i, Year);
+	}
+
+	TotalDays += Day;
+
+	return TotalDays;
+
+}
+
+
+
+
+
+
+int main()
+{
+
+	short Day = ReadDays() , Month = ReadMonth() , Year = ReadYear() ;
+
+	cout << "\nNumber Of Days From begining Of The Year Is : " << NumberOfDaysFromBeginingOfTheYear(Day, Month, Year) << "\n\n";
+
+
+	system("pause>0");
+	return 0;
+}

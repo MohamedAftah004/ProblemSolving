@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+
+struct stDate {
+	short Day;
+	short Month;
+	short Year;
+};
+
+
+vector<string>SplitString(string DateLine, string Delim)
+{
+
+	short pos = 0;
+	string sWord = "";
+	vector<string>vDateCutting;
+
+	while ((pos = DateLine.find(Delim)) != std::string::npos)
+	{
+
+		sWord = DateLine.substr(0, pos);
+		DateLine.erase(0, pos + Delim.length());
+
+		if (sWord != "")
+		{
+			vDateCutting.push_back(sWord);
+		}
+
+	}
+
+	if (DateLine != "")
+		vDateCutting.push_back(DateLine);
+
+
+	return vDateCutting;
+}
+
+string DateToString(stDate Date)
+{
+	return to_string(Date.Day) + "/" + to_string(Date.Month) + "/" + to_string(Date.Year);
+}
+
+
+stDate StringToDate(string DateLine )
+{
+	stDate Date;
+	vector<string>vDate;
+
+	vDate = SplitString(DateLine, "/");
+
+	Date.Day = stoi(vDate[0]);
+	Date.Month = stoi(vDate[1]);
+	Date.Year = stoi(vDate[2]);
+
+
+	return Date;
+}
+
+
+
+/*
+string ConvertRecordToLine(stDate Date , string Sperator = "/")
+{
+
+	string DateLineInfo = "";
+	DateLineInfo = Date.Day + Sperator;
+	DateLineInfo += Date.Month + Sperator;
+	DateLineInfo += Date.Year;
+
+	return DateLineInfo;
+
+}
+*/
+
+
+
+string ReadFullDate()
+{
+
+	string FullDate = "";
+	cout << "Please Enter Date dd/mm//yyyy  ? ";
+	getline(cin >> ws, FullDate);
+	return FullDate;
+
+}
+
+int main()
+{
+
+	string DateLineInfo = ReadFullDate();
+	stDate Date = StringToDate(DateLineInfo);
+	
+
+	cout << "\nDay   : " << Date.Day << endl;
+	cout << "Month : " << Date.Month << endl;
+	cout << "Year  : " << Date.Year << endl;
+
+	cout << "\nYou Entered : " << DateToString(Date) << endl;
+
+	system("pause>0");
+	return 0;
+}
