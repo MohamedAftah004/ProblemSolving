@@ -1,0 +1,81 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 "clsScreen.h"\cf0 ;\
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\cf4 class\cf0  \cf5 clsListClientsScreen\cf0  : \cf4 protected\cf0  \cf5 clsScreen\cf0 \
+\{\
+\
+\cf2 #include\cf0  \cf3 "clsInputValidate.h"\cf0 \
+\
+\cf4 private\cf0 :\
+\
+    \cf4 static\cf0  \cf4 void\cf0  _PrintClientRecordLine(\cf5 clsBankClient\cf0  \cf2 Client\cf0 )\
+    \{\
+\
+        cout \cf6 <<\cf0  \cf3 "\\t| "\cf0  \cf6 <<\cf0  setw(15) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .AccountNumber();\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(20) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .FullName();\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(12) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .Phone;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(20) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .Email;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(10) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .PinCode;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  setw(12) \cf6 <<\cf0  left \cf6 <<\cf0  \cf2 Client\cf0 .AccountBalance;\
+                   \
+\
+    \}\
+    \
+    \cf4 static\cf0  \cf4 void\cf0  _ShowClientsList()\
+    \{\
+\
+        \cf5 vector\cf0 <\cf5 clsBankClient\cf0 >vClients = \cf5 clsBankClient\cf0 ::GetClientsList();\
+\
+        cout \cf6 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n\\n"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "\\t| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(15) \cf6 <<\cf0  \cf3 "Account Number"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(20) \cf6 <<\cf0  \cf3 "Client Name"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(12) \cf6 <<\cf0  \cf3 "Phone"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(20) \cf6 <<\cf0  \cf3 "Email"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(10) \cf6 <<\cf0  \cf3 "PinCode"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "| "\cf0  \cf6 <<\cf0  left \cf6 <<\cf0  setw(12) \cf6 <<\cf0  \cf3 "Balance"\cf0 ;\
+        cout \cf6 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n\\n"\cf0 ;\
+\
+        \cf4 for\cf0  (\cf5 clsBankClient\cf0  C : vClients)\
+        \{\
+\
+            _PrintClientRecordLine(C);\
+            cout \cf6 <<\cf0  endl;\
+        \}\
+        cout \cf6 <<\cf0  \cf3 "\\n\\t__________________________________________________________________________________________________\\n"\cf0 ;\
+\
+\
+\
+    \}\
+\
+\
+\cf4 public\cf0 :\
+    \cf4 static\cf0  \cf4 void\cf0  ShowClientListScreen()\
+    \{\
+\
+        \cf5 vector\cf0 <\cf5 clsBankClient\cf0 >vClients = \cf5 clsBankClient\cf0 ::GetClientsList();\
+        \cf4 short\cf0  ClientsNumber = vClients.size();\
+        \cf5 string\cf0  Title = \cf3 "Client List Screen"\cf0 ;\
+        \cf5 string\cf0  SubTitle = \cf3 "("\cf0  \cf6 +\cf0  to_string(ClientsNumber) \cf6 +\cf0  \cf3 ") Client(s). "\cf0 ;\
+\
+\
+        \cf5 clsScreen\cf0 ::_DrawScreenHeader(Title, SubTitle);\
+\
+        _ShowClientsList();\
+\
+    \}\
+\
+\};\
+\
+}

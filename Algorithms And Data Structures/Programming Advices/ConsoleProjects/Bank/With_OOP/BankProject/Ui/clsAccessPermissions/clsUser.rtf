@@ -1,0 +1,385 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red47\green79\blue79;\red0\green128\blue128;\red0\green128\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c18431\c30980\c30980;\csgenericrgb\c0\c50196\c50196;\csgenericrgb\c0\c50196\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 <string>\cf0 \
+\cf2 #include\cf0  \cf3 "clsPerson.h"\cf0 \
+\cf2 #include\cf0  \cf3 "clsString.h"\cf0 \
+\cf2 #include\cf0  \cf3 <vector>\cf0 \
+\cf2 #include\cf0  \cf3 <fstream>\cf0 \
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\cf4 class\cf0  \cf5 clsUsers\cf0  : \cf4 public\cf0  \cf5 clsPerson\cf0 \
+\{\
+\cf4 private\cf0 :\
+\
+    \cf4 enum\cf0  \cf5 enMode\cf0  \{ \cf6 EmptyMode\cf0  = 0, \cf6 UpdateMode\cf0  = 1, \cf6 AddNewMode\cf0  = 2 \};\
+    \cf5 enMode\cf0  _Mode;\
+    \cf5 string\cf0  _UserName;\
+    \cf5 string\cf0  _Password;\
+    \cf4 int\cf0  _Permissions;\
+\
+    \cf4 bool\cf0  _MarkedForDelete = \cf4 false\cf0 ;\
+\
+    \cf4 static\cf0  \cf5 clsUsers\cf0  _ConvertLinetoUserObject(\cf5 string\cf0  \cf2 Line\cf0 , \cf5 string\cf0  \cf2 Seperator\cf0  = \cf3 "#//#"\cf0 )\
+    \{\
+        \cf5 vector\cf0 <\cf5 string\cf0 > vUserData;\
+        vUserData \cf7 =\cf0  \cf5 clsString\cf0 ::Split(\cf2 Line\cf0 , \cf2 Seperator\cf0 );\
+\
+        \cf4 return\cf0  \cf5 clsUsers\cf0 (\cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 , vUserData\cf7 [\cf0 0\cf7 ]\cf0 , vUserData\cf7 [\cf0 1\cf7 ]\cf0 , vUserData\cf7 [\cf0 2\cf7 ]\cf0 ,\
+            vUserData\cf7 [\cf0 3\cf7 ]\cf0 , vUserData\cf7 [\cf0 4\cf7 ]\cf0 , vUserData\cf7 [\cf0 5\cf7 ]\cf0 , stoi(vUserData\cf7 [\cf0 6\cf7 ]\cf0 ));\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 string\cf0  _ConverUserObjectToLine(\cf5 clsUsers\cf0  \cf2 User\cf0 , \cf5 string\cf0  \cf2 Seperator\cf0  = \cf3 "#//#"\cf0 )\
+    \{\
+\
+        \cf5 string\cf0  UserRecord = \cf3 ""\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .FirstName \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .LastName \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .Email \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .Phone \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .UserName \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  \cf2 User\cf0 .Password \cf7 +\cf0  \cf2 Seperator\cf0 ;\
+        UserRecord \cf7 +=\cf0  to_string(\cf2 User\cf0 .Permissions);\
+\
+        \cf4 return\cf0  UserRecord;\
+\
+    \}\
+\
+    \cf4 static\cf0   \cf5 vector\cf0  <\cf5 clsUsers\cf0 > _LoadUsersDataFromFile()\
+    \{\
+\
+        \cf5 vector\cf0  <\cf5 clsUsers\cf0 > vUsers;\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Users.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            \cf5 string\cf0  Line;\
+\
+\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+\
+                \cf5 clsUsers\cf0  User = _ConvertLinetoUserObject(Line);\
+\
+                vUsers.push_back(User);\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+        \cf4 return\cf0  vUsers;\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf4 void\cf0  _SaveUsersDataToFile(\cf5 vector\cf0  <\cf5 clsUsers\cf0 > \cf2 vUsers\cf0 )\
+    \{\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Users.txt"\cf0 , \cf5 ios\cf0 ::out);\cf8 //overwrite\cf0 \
+\
+        \cf5 string\cf0  DataLine;\
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            \cf4 for\cf0  (\cf5 clsUsers\cf0  U : \cf2 vUsers\cf0 )\
+            \{\
+                \cf4 if\cf0  (U.MarkedForDeleted() == \cf4 false\cf0 )\
+                \{\
+                    \cf8 //we only write records that are not marked for delete.  \cf0 \
+                    DataLine \cf7 =\cf0  _ConverUserObjectToLine(U);\
+                    MyFile \cf7 <<\cf0  DataLine \cf7 <<\cf0  endl;\
+\
+                \}\
+\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+    \}\
+\
+    \cf4 void\cf0  _Update()\
+    \{\
+        \cf5 vector\cf0  <\cf5 clsUsers\cf0 > _vUsers;\
+        _vUsers \cf7 =\cf0  _LoadUsersDataFromFile();\
+\
+        \cf4 for\cf0  (\cf5 clsUsers\cf0 & U : _vUsers)\
+        \{\
+            \cf4 if\cf0  (U.UserName \cf7 ==\cf0  UserName)\
+            \{\
+                U \cf7 =\cf0  *\cf4 this\cf0 ;\
+                \cf4 break\cf0 ;\
+            \}\
+\
+        \}\
+\
+        _SaveUsersDataToFile(_vUsers);\
+\
+    \}\
+\
+    \cf4 void\cf0  _AddNew()\
+    \{\
+\
+        _AddDataLineToFile(_ConverUserObjectToLine(*\cf4 this\cf0 ));\
+    \}\
+\
+    \cf4 void\cf0  _AddDataLineToFile(\cf5 string\cf0   \cf2 stDataLine\cf0 )\
+    \{\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Users.txt"\cf0 , \cf5 ios\cf0 ::out | \cf5 ios\cf0 ::app);\
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+\
+            MyFile \cf7 <<\cf0  \cf2 stDataLine\cf0  \cf7 <<\cf0  endl;\
+\
+            MyFile.close();\
+        \}\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsUsers\cf0  _GetEmptyUserObject()\
+    \{\
+        \cf4 return\cf0  \cf5 clsUsers\cf0 (\cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , 0);\
+    \}\
+\
+\
+\
+\
+\cf4 public\cf0 :\
+\
+    \cf4 enum\cf0  \cf5 enPermissions\cf0  \{\
+        \cf6 eAll\cf0  = -1, \cf6 pListClients\cf0  = 1, \cf6 pAddNewClient\cf0  = 2, \cf6 pDeleteClient\cf0  = 4, \cf6 pUpdateClient\cf0  = 8,\
+        \cf6 pFindClient\cf0  = 16, \cf6 pTransaction\cf0  = 32, \cf6 pManageUsers\cf0  = 64\
+    \};\
+\
+\
+\
+    clsUsers(\cf5 enMode\cf0  \cf2 Mode\cf0 , \cf5 string\cf0  \cf2 FirstName\cf0 , \cf5 string\cf0  \cf2 LastName\cf0 ,\
+        \cf5 string\cf0  \cf2 Email\cf0 , \cf5 string\cf0  \cf2 Phone\cf0 , \cf5 string\cf0  \cf2 UserName\cf0 , \cf5 string\cf0  \cf2 Password\cf0 ,\
+        \cf4 int\cf0  \cf2 Permissions\cf0 ) :\
+        \cf5 clsPerson\cf0 (\cf2 FirstName\cf0 , \cf2 LastName\cf0 , \cf2 Email\cf0 , \cf2 Phone\cf0 )\
+\
+    \{\
+        _Mode = \cf2 Mode\cf0 ;\
+        _UserName \cf7 =\cf0  \cf2 UserName\cf0 ;\
+        _Password \cf7 =\cf0  \cf2 Password\cf0 ;\
+        _Permissions = \cf2 Permissions\cf0 ;\
+    \}\
+\
+    \cf4 bool\cf0  IsEmpty()\
+    \{\
+        \cf4 return\cf0  (_Mode == \cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 );\
+    \}\
+\
+    \cf4 bool\cf0  MarkedForDeleted()\
+    \{\
+        \cf4 return\cf0  _MarkedForDelete;\
+    \}\
+\
+    \cf5 string\cf0  GetUserName()\
+    \{\
+        \cf4 return\cf0  _UserName;\
+    \}\
+\
+    \cf4 void\cf0  SetUserName(\cf5 string\cf0  \cf2 UserName\cf0 )\
+    \{\
+        _UserName \cf7 =\cf0  \cf2 UserName\cf0 ;\
+    \}\
+\
+    \cf4 __declspec\cf0 (\cf4 property\cf0 (get = GetUserName, put = SetUserName)) \cf5 string\cf0  UserName;\
+\
+    \cf4 void\cf0  SetPassword(\cf5 string\cf0  \cf2 Password\cf0 )\
+    \{\
+        _Password \cf7 =\cf0  \cf2 Password\cf0 ;\
+    \}\
+\
+    \cf5 string\cf0  GetPassword()\
+    \{\
+        \cf4 return\cf0  _Password;\
+    \}\
+    \cf4 __declspec\cf0 (\cf4 property\cf0 (get = GetPassword, put = SetPassword)) \cf5 string\cf0  Password;\
+\
+    \cf4 void\cf0  SetPermissions(\cf4 int\cf0  \cf2 Permissions\cf0 )\
+    \{\
+        _Permissions = \cf2 Permissions\cf0 ;\
+    \}\
+\
+    \cf4 int\cf0  GetPermissions()\
+    \{\
+        \cf4 return\cf0  _Permissions;\
+    \}\
+    \cf4 __declspec\cf0 (\cf4 property\cf0 (get = GetPermissions, put = SetPermissions)) \cf4 int\cf0  Permissions;\
+\
+    \cf4 static\cf0  \cf5 clsUsers\cf0  Find(\cf5 string\cf0  \cf2 UserName\cf0 )\
+    \{\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Users.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+            \cf5 string\cf0  Line;\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+                \cf5 clsUsers\cf0  User = _ConvertLinetoUserObject(Line);\
+                \cf4 if\cf0  (User.UserName \cf7 ==\cf0  \cf2 UserName\cf0 )\
+                \{\
+                    MyFile.close();\
+                    \cf4 return\cf0  User;\
+                \}\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+\
+        \cf4 return\cf0  _GetEmptyUserObject();\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsUsers\cf0  Find(\cf5 string\cf0  \cf2 UserName\cf0 , \cf5 string\cf0  \cf2 Password\cf0 )\
+    \{\
+\
+        \cf5 fstream\cf0  MyFile;\
+        MyFile.open(\cf3 "Users.txt"\cf0 , \cf5 ios\cf0 ::in);\cf8 //read Mode\cf0 \
+\
+        \cf4 if\cf0  (MyFile.is_open())\
+        \{\
+            \cf5 string\cf0  Line;\
+            \cf4 while\cf0  (getline(MyFile, Line))\
+            \{\
+                \cf5 clsUsers\cf0  User = _ConvertLinetoUserObject(Line);\
+                \cf4 if\cf0  (User.UserName \cf7 ==\cf0  \cf2 UserName\cf0  && User.Password \cf7 ==\cf0  \cf2 Password\cf0 )\
+                \{\
+                    MyFile.close();\
+                    \cf4 return\cf0  User;\
+                \}\
+\
+            \}\
+\
+            MyFile.close();\
+\
+        \}\
+        \cf4 return\cf0  _GetEmptyUserObject();\
+    \}\
+\
+    \cf4 enum\cf0  \cf5 enSaveResults\cf0  \{ \cf6 svFaildEmptyObject\cf0  = 0, \cf6 svSucceeded\cf0  = 1, \cf6 svFaildUserExists\cf0  = 2 \};\
+\
+    \cf5 enSaveResults\cf0  Save()\
+    \{\
+\
+        \cf4 switch\cf0  (_Mode)\
+        \{\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 EmptyMode\cf0 :\
+        \{\
+            \cf4 if\cf0  (IsEmpty())\
+            \{\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svFaildEmptyObject\cf0 ;\
+            \}\
+        \}\
+\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 :\
+        \{\
+            _Update();\
+            \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svSucceeded\cf0 ;\
+\
+            \cf4 break\cf0 ;\
+        \}\
+\
+        \cf4 case\cf0  \cf5 enMode\cf0 ::\cf6 AddNewMode\cf0 :\
+        \{\
+            \cf8 //This will add new record to file or database\cf0 \
+            \cf4 if\cf0  (\cf5 clsUsers\cf0 ::IsUserExist(_UserName))\
+            \{\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svFaildUserExists\cf0 ;\
+            \}\
+            \cf4 else\cf0 \
+            \{\
+                _AddNew();\
+\
+                _Mode = \cf5 enMode\cf0 ::\cf6 UpdateMode\cf0 ;\
+                \cf4 return\cf0  \cf5 enSaveResults\cf0 ::\cf6 svSucceeded\cf0 ;\
+            \}\
+\
+            \cf4 break\cf0 ;\
+        \}\
+        \}\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf4 bool\cf0  IsUserExist(\cf5 string\cf0  \cf2 UserName\cf0 )\
+    \{\
+\
+        \cf5 clsUsers\cf0  User = \cf5 clsUsers\cf0 ::Find(\cf2 UserName\cf0 );\
+        \cf4 return\cf0  (!User.IsEmpty());\
+    \}\
+\
+\
+    \cf4 bool\cf0  Delete()\
+    \{\
+        \cf5 vector\cf0  <\cf5 clsUsers\cf0 > _vUsers;\
+        _vUsers \cf7 =\cf0  _LoadUsersDataFromFile();\
+\
+        \cf4 for\cf0  (\cf5 clsUsers\cf0 & U : _vUsers)\
+        \{\
+            \cf4 if\cf0  (U.UserName \cf7 ==\cf0  _UserName)\
+            \{\
+                U._MarkedForDelete = \cf4 true\cf0 ;\
+                \cf4 break\cf0 ;\
+            \}\
+\
+        \}\
+\
+        _SaveUsersDataToFile(_vUsers);\
+\
+        *\cf4 this\cf0  \cf7 =\cf0  _GetEmptyUserObject();\
+\
+        \cf4 return\cf0  \cf4 true\cf0 ;\
+\
+    \}\
+\
+    \cf4 static\cf0  \cf5 clsUsers\cf0  GetAddNewUserObject(\cf5 string\cf0  \cf2 UserName\cf0 )\
+    \{\
+        \cf4 return\cf0  \cf5 clsUsers\cf0 (\cf5 enMode\cf0 ::\cf6 AddNewMode\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf3 ""\cf0 , \cf2 UserName\cf0 , \cf3 ""\cf0 , 0);\
+    \}\
+\
+    \cf4 static\cf0  \cf5 vector\cf0  <\cf5 clsUsers\cf0 > GetUsersList()\
+    \{\
+        \cf4 return\cf0  _LoadUsersDataFromFile();\
+    \}\
+\
+\
+    \cf4 bool\cf0  CheckAccessPermissions(\cf5 enPermissions\cf0  \cf2 Permission\cf0 )\
+    \{\
+\
+        \cf4 if\cf0  (\cf4 this\cf0 ->Permissions == \cf5 enPermissions\cf0 ::\cf6 eAll\cf0 )\
+        \{\
+            \cf4 return\cf0  \cf4 true\cf0 ;\
+        \}\
+\
+        \cf4 if\cf0  ((\cf2 Permission\cf0  & \cf4 this\cf0 ->Permissions) == \cf2 Permission\cf0 )\
+            \cf4 return\cf0  \cf4 true\cf0 ;\
+        \cf4 else\cf0 \
+            \cf4 return\cf0  \cf4 false\cf0 ;\
+\
+\
+    \}\
+\
+\
+\};\
+\
+}

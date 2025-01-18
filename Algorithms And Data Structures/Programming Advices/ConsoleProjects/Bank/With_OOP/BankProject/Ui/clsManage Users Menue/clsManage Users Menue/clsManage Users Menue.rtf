@@ -1,0 +1,157 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red47\green79\blue79;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c18431\c30980\c30980;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 "clsBankClient.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsScreen.h"\cf0 ;\
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std; \
+\
+\cf4 class\cf0  \cf5 clsManageUsersMenue\cf0  : \cf4 protected\cf0  \cf5 clsScreen\cf0 \
+\{\
+\
+\cf4 private\cf0 :\
+\
+	\cf4 enum\cf0  \cf5 _enManageOptions\cf0 \{\cf6 eListUsers\cf0  = 1 , \cf6 eAddNewUser\cf0  = 2 , \cf6 eDeleteUser\cf0  = 3 ,\
+		\cf6 eUpdateUser\cf0  = 4 , \cf6 eFindUser\cf0  = 5 , \cf6 eMainMenue\cf0  = 6\};\
+\
+\
+	\cf4 static\cf0  \cf4 short\cf0  _ReadManageMenueOption()\
+	\{\
+		cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "Choose what do you want to do? [1 to 6]? "\cf0 ;\
+		\cf4 short\cf0  Choice = \cf5 clsInputValidate\cf0 ::ReadShortNumberBetween(1, 6, \cf3 "Enter Number between 1 to 6? "\cf0 );\
+		\cf4 return\cf0  Choice;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _GoBackToManageUsersMenue()\
+	\{\
+		ManageUsersMenueScreen();\
+	\}\
+\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowListUsers()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere List Screen.\\n"\cf0 ;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowAddNewUserScreen()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere Add New User.\\n"\cf0 ;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowDeleteUserScreen()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere Delete User.\\n"\cf0 ;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowUpdateUserScreen()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere Update User.\\n"\cf0 ;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowFindUserScreen()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere Find User.\\n"\cf0 ;\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _ShowGoBackToManageMenueScreen()\
+	\{\
+		cout \cf7 <<\cf0  \cf3 "\\nHere Go Back To Manage Menue Screen .\\n"\cf0 ;\
+	\}\
+\
+\
+	\cf4 static\cf0  \cf4 void\cf0  PerformManageUsersMenueOptions(\cf5 _enManageOptions\cf0  \cf2 ManageOptions\cf0 )\
+	\{\
+\
+		\cf4 switch\cf0  (\cf2 ManageOptions\cf0 )\
+		\{\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eListUsers\cf0 :\
+		\{\
+			system(\cf3 "cls"\cf0 );\
+			_ShowListUsers();\
+			system(\cf3 "pause>0"\cf0 );\
+			_GoBackToManageUsersMenue();\
+			\cf4 break\cf0 ;\
+		\}\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eAddNewUser\cf0 :\
+		\{\
+			system(\cf3 "cls"\cf0 );\
+			_ShowAddNewUserScreen();\
+			system(\cf3 "pause>0"\cf0 );\
+			_GoBackToManageUsersMenue();\
+			\cf4 break\cf0 ;\
+		\}\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eDeleteUser\cf0 :\
+		\{\
+			system(\cf3 "cls"\cf0 );\
+			_ShowDeleteUserScreen();\
+			system(\cf3 "pause>0"\cf0 );\
+			_GoBackToManageUsersMenue();\
+			\cf4 break\cf0 ;\
+		\}\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eUpdateUser\cf0 :\
+		\{\
+			system(\cf3 "cls"\cf0 );\
+			_ShowUpdateUserScreen();\
+			system(\cf3 "pause>0"\cf0 );\
+			_GoBackToManageUsersMenue();\
+			\cf4 break\cf0 ;\
+		\}\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eFindUser\cf0 :\
+		\{\
+			system(\cf3 "cls"\cf0 );\
+			_ShowFindUserScreen();\
+			system(\cf3 "pause>0"\cf0 );\
+			_GoBackToManageUsersMenue();\
+			\cf4 break\cf0 ;\
+		\}\
+\
+		\cf4 case\cf0  \cf5 _enManageOptions\cf0 ::\cf6 eMainMenue\cf0 :\
+		\{\
+\
+		\}\
+\
+		\}\
+\
+	\}\
+\
+\
+\
+	\cf4 public\cf0 :\
+	\
+		\cf4 static\cf0  \cf4 void\cf0  ShowManageUsersMenue()\
+		\{\
+\
+			system(\cf3 "cls"\cf0 );\
+			_DrawScreenHeader(\cf3 "Manage Users Screen"\cf0 );\
+\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "===========================================\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t\\tManage Users Menue\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "===========================================\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[1] List Users.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[2] Add New User.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[3] Delete User.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[4] Update User Info.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[5] Find User.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "\\t[6] Main Menue.\\n"\cf0 ;\
+			cout \cf7 <<\cf0  setw(37) \cf7 <<\cf0  left \cf7 <<\cf0  \cf3 ""\cf0  \cf7 <<\cf0  \cf3 "===========================================\\n"\cf0 ;\
+\
+			PerformManageUsersMenueOptions((\cf5 _enManageOptions\cf0 )_ReadManageMenueOption());\
+\
+		\}\
+\
+\};\
+\
+}
