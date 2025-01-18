@@ -1,0 +1,122 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red128\green128\blue128;\red163\green21\blue21;\red0\green0\blue255;
+\red43\green145\blue175;\red0\green128\blue128;}
+{\*\expandedcolortbl;;\csgenericrgb\c50196\c50196\c50196;\csgenericrgb\c63922\c8235\c8235;\csgenericrgb\c0\c0\c100000;
+\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c0\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs19 \cf2 \cb0 #pragma\cf0  \cf2 once\cf0 \
+\cf2 #include\cf0  \cf3 <iostream>\cf0 \
+\cf2 #include\cf0  \cf3 "clsCurrency.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsString.h"\cf0 ;\
+\cf2 #include\cf0  \cf3 "clsScreen.h"\cf0 ;\
+\
+\
+\cf4 using\cf0  \cf4 namespace\cf0  std;\
+\
+\
+\cf4 class\cf0  \cf5 clsFindCurrencyScreen\cf0  : \cf5 clsScreen\cf0 \
+\{\
+\
+\cf4 private\cf0 :\
+\
+\
+	\cf4 static\cf0  \cf4 void\cf0  _PrintCurrencyCard(\cf5 clsCurrency\cf0  \cf2 Currency\cf0 )\
+	\{\
+\
+		cout \cf6 <<\cf0  \cf3 "\\nCurrency Card:\\n____________________________\\n"\cf0 ;\
+		cout \cf6 <<\cf0  \cf3 "Country     : "\cf0  \cf6 <<\cf0  \cf2 Currency\cf0 .Country();\
+		cout \cf6 <<\cf0  \cf3 "\\nCode      : "\cf0  \cf6 <<\cf0  \cf2 Currency\cf0 .CurrencyCode();\
+		cout \cf6 <<\cf0  \cf3 "\\nName      : "\cf0  \cf6 <<\cf0  \cf2 Currency\cf0 .CurrencyName();\
+		cout \cf6 <<\cf0  \cf3 "\\nRate/(1$) : "\cf0  \cf6 <<\cf0  \cf2 Currency\cf0 .Rate();\
+		cout \cf6 <<\cf0  \cf3 "\\n____________________________\\n"\cf0 ;\
+\
+	\}\
+\
+	\cf4 static\cf0  \cf4 void\cf0  ShowResults(\cf5 clsCurrency\cf0  \cf2 Currency\cf0 )\
+	\{\
+\
+		\cf4 if\cf0  (!\cf2 Currency\cf0 .IsEmpty())\
+		\{\
+			cout \cf6 <<\cf0  \cf3 "\\nCurrency Found :-)\\n"\cf0 ;\
+			_PrintCurrencyCard(\cf2 Currency\cf0 );\
+		\}\
+		\cf4 else\cf0 \
+		\{\
+			cout \cf6 <<\cf0  \cf3 "\\nCurrency Was not Found :-( \\n"\cf0 ;\
+		\}\
+\
+	\}\
+\
+\
+\cf4 public\cf0 :\
+\
+\
+	\cf4 static\cf0  \cf4 void\cf0  ShowFindCurrencyScreen()\
+	\{\
+\
+		\cf4 char\cf0  More = \cf3 'y'\cf0 ;\
+\
+\
+		\cf4 do\cf0  \{\
+\
+\
+			_DrawScreenHeader(\cf3 "Find Currency Screen"\cf0 );\
+\
+\
+			cout \cf6 <<\cf0  \cf3 "\\nFind By: [1] Code or [2] Country ? "\cf0 ;\
+			\cf4 short\cf0  Answer = 1;\
+			cin \cf6 >>\cf0  Answer;\
+\
+			\cf4 while\cf0  (Answer > 2 || Answer < 1)\
+			\{\
+				cout \cf6 <<\cf0  \cf3 "\\nChoose : Find By: [1] Code or [2] Country ? "\cf0 ;\
+				cin \cf6 >>\cf0  Answer;\
+\
+			\}\
+\
+			\cf4 if\cf0  (Answer == 1)\
+			\{\
+				\cf5 string\cf0  CurrencyCode;\
+\
+				cout \cf6 <<\cf0  \cf3 "Please Enter Currency Code: "\cf0 ;\
+\
+				CurrencyCode \cf6 =\cf0  \cf5 clsInputValidate\cf0 ::ReadString();\
+\
+				\cf5 clsCurrency\cf0  Currency = \cf5 clsCurrency\cf0 ::FindByCode(CurrencyCode);\
+\
+				ShowResults(Currency);\
+			\}\
+			\cf4 else\cf0 \
+			\{\
+\
+				\cf5 string\cf0  CountryName;\
+\
+				cout \cf6 <<\cf0  \cf3 "Please Enter Country Name: "\cf0 ;\
+\
+				CountryName \cf6 =\cf0  \cf5 clsInputValidate\cf0 ::ReadString();\
+\
+				\cf5 clsCurrency\cf0  Currency = \cf5 clsCurrency\cf0 ::FindByCountry(CountryName);\
+\
+				ShowResults(Currency);\
+\
+			\}\
+\
+			cout \cf6 <<\cf0  \cf3 "\\n\\nDo you want to stay on the page ? y/n?"\cf0 ;\
+			cin \cf6 >>\cf0  More;\
+			system(\cf3 "cls"\cf0 );\
+\
+		\} \cf4 while\cf0  (toupper(More) == \cf3 'Y'\cf0 );\
+	\
+\
+\
+\
+		\cf4 return\cf0 ;\
+\
+	\}\
+\
+\};\
+\
+}
