@@ -4,3 +4,6 @@ This folder contains **advanced solutions** and **challenges**, categorized by t
 - **Searching Binary Search**  
 - **Graph**  
 - **Topological Sorting**  
+
+
+![Problem Solving Animation](https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif)
