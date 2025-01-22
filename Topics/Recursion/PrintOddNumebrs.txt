@@ -1,0 +1,36 @@
+using System;
+namespace Leetcode_s_sharp
+{
+    class Program
+    {
+
+        static bool IsOdd(int number)
+        {
+            return number % 2 != 0;
+        }
+
+
+        static int counter = 0;
+        static void Result(int number)
+        {
+
+            counter++;
+            if (number == 1)
+                return;
+
+            if (IsOdd(number))
+                Result(3 * number + 1 );
+            else
+                Result(number / 2);
+        }
+        
+        
+        static void Main(string[] args)
+        {
+            Result(6);
+            Console.WriteLine(counter);
+            Console.ReadKey();  
+        }
+    }
+}
+

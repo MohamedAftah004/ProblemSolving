@@ -1,0 +1,23 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+
+int GetPower(int value , int pow = 2)
+{
+    if (pow == 0)
+        return 1;
+    
+    return value * GetPower(value , pow-1);
+}
+
+
+int main()
+{
+   
+   cout << "The result is :\n";
+   cout << GetPower(10,3) << endl;
+   
+   
+   return 0;
+}
