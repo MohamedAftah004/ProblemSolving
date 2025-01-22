@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+
+
+void ArrayRightMax(int arr[] , int arrLength , int startPosition = 0)
+{
+    
+    
+    if(startPosition == arrLength-1)
+        return ;
+    
+    ArrayRightMax(arr , arrLength , startPosition+1);
+    arr[startPosition] = max(arr[startPosition] , arr[startPosition+1]);
+    
+}
+
+
+
+int main (){
+    
+    int arr[5] = {10,3,7,14,5};
+    ArrayRightMax(arr,5);
+    for(int i = 0 ; i < 5 ; i++)
+    {
+        cout << arr[i] << "    ";
+    }
+    
+    cout << endl;
+    return 0;
+}

@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+
+
+int SuffixSum(int arr[] , int arrLength , int value , int sum = 0 , int startPosition = 0)
+{
+    
+    
+    if(startPosition == value || arrLength == 0)
+        return sum ;
+    
+    sum += arr[startPosition];
+    return SuffixSum(arr, arrLength, value , sum , startPosition+1);
+}
+
+
+
+int main (){
+    
+    int arr[5] = {10,3,1,14,5};
+    cout << SuffixSum(arr,5 , 4) << endl;
+
+    
+    return 0;
+}

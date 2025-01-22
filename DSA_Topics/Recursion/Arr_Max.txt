@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int GetMaxOfArray(int arr[] , int arrLength )
+{
+    
+    if(arrLength == 1)
+        return arr[0];
+  
+    int sub_result = GetMaxOfArray(arr, arrLength - 1);
+    return max(sub_result, arr[arrLength - 1]);
+                               
+    
+}
+
+
+
+int main (){
+    
+    int arr[10] = {1,2,3,4,5,23,11,8,9,10};
+    cout << GetMaxOfArray(arr, 10) << endl ;
+    
+    return 0;
+}
